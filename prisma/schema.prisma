@@ -14,5 +14,4 @@ model Usuario {
   email      String  @unique @db.VarChar(255)
   username   String  @unique @db.VarChar(255)
   password   String  @db.VarChar(255)
-  salt       String  @db.VarChar(255)
 }

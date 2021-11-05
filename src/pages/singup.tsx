@@ -7,7 +7,7 @@ import ModalComponent from "../components/Modal";
 
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
-import { LoginDto } from "../api/Login";
+import { CadastroUserDto } from "../api/Login";
 import { useRouter } from "next/router";
 
 function SingUpPage() {
@@ -26,7 +26,7 @@ function SingUpPage() {
   const [username, setUsername] = useState("");
 
   function singUpHandler() {
-    const loginData: LoginDto = {
+    const loginData: CadastroUserDto = {
       nome: name,
       nomeSocial,
       email,

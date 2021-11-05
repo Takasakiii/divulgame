@@ -8,9 +8,11 @@
 - [MariaDB/MySql](https://mariadb.org/)
 - [TailwindCss](https://tailwindcss.com)
 - [Prisma](https://www.prisma.io)
+- [Jwt](https://jwt.io/)
 
 ## Variaveis do Ambiente Necessarias:
 
 ```env
 DATABASE_URL=mysql://seu_user:sua_senha@host_mysql:port_mysql/nome_da_db
+JWT_SECRET=secret_value
 ```
