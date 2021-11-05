@@ -6,3 +6,4 @@
 - [Next](https://nextjs.org)
 - [yarn](https://yarnpkg.com/)
 - [MariaDB/MySql](https://mariadb.org/)
+- [TailwindCss](https://tailwindcss.com)
