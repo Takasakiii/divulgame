@@ -7,13 +7,22 @@ import ModalComponent from "../components/Modal";
 
 import Link from "next/link";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { LoginDto } from "../api/Login";
 
 function LoginPage() {
+  const router = useRouter();
+
   const [usuario, setUsuario] = useState("");
   const [senha, setSenha] = useState("");
+
+  const [modalState, setModalState] = useState({
+    show: false,
+    message: "",
+    title: "",
+  });
 
   function onLogin() {
     const data: LoginDto = {
@@ -23,8 +32,26 @@ function LoginPage() {
 
     axios
       .post("/api/auth", data)
-      .then((e) => console.log(e.data))
-      .catch((e) => console.log(e));
+      .then((response) => {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        router.push("/");
+      })
+      .catch((e: AxiosError) => {
+        setModalState({
+          show: true,
+          message: e.response?.data.error,
+          title: "Erro",
+        });
+      });
+  }
+
+  function onCloseModalHandler() {
+    setModalState({
+      show: false,
+      message: "",
+      title: "",
+    });
   }
 
   return (
@@ -49,8 +76,12 @@ function LoginPage() {
           </CenterComponent>
         </FormComponent>
       </CenterScreenComponent>
-      <ModalComponent isOpen={false} title="Login" onClose={() => {}}>
-        Ola
+      <ModalComponent
+        isOpen={modalState.show}
+        title={modalState.title}
+        onClose={onCloseModalHandler}
+      >
+        {modalState.message}
       </ModalComponent>
     </>
   );

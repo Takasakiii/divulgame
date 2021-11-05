@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Login, { InvalidUserOrPassError } from "../../api/Login";
+import { InvalidArgsError } from "../../api/Api";
 
 function handle(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -21,7 +22,12 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
       res.status(401).json({
         error: "Usuario ou senha invalidos.",
       });
+    } else if (err instanceof InvalidArgsError) {
+      res.status(400).json({
+        error: err.message,
+      });
     } else {
+      console.error(err);
       res.status(500).json({
         error: "Erro interno do servidor.",
       });
