@@ -7,3 +7,10 @@
 - [yarn](https://yarnpkg.com/)
 - [MariaDB/MySql](https://mariadb.org/)
 - [TailwindCss](https://tailwindcss.com)
+- [Prisma](https://www.prisma.io)
+
+## Variaveis do Ambiente Necessarias:
+
+```env
+DATABASE_URL=mysql://seu_user:sua_senha@host_mysql:port_mysql/nome_da_db
+```
