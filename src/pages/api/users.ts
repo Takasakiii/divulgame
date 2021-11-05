@@ -17,10 +17,17 @@ async function handle(req: NextApiRequest, res: NextApiResponse) {
       res.status(400).json({
         error: error.message,
       });
-    } else {
-      res.status(500).json({
-        error: "Internal server error",
-      });
+    } else if (error instanceof Error) {
+      if (error.message.includes("Unique constraint")) {
+        res.status(400).json({
+          error: "Usuario ou email ja cadastrado anteriormente",
+        });
+      } else {
+        console.error(error);
+        res.status(500).json({
+          error: "Internal server error",
+        });
+      }
     }
   }
 }
