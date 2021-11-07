@@ -1,3 +1,6 @@
+import type { ReactElement } from "react";
+import DefaultLayout from "../layouts/Default";
+
 import Link from "next/link";
 
 function IndexPage() {
@@ -9,5 +12,9 @@ function IndexPage() {
     </>
   );
 }
+
+IndexPage.getLayout = function getLayout(page: ReactElement) {
+  return <DefaultLayout>{page}</DefaultLayout>;
+};
 
 export default IndexPage;
