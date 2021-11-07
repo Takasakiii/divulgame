@@ -14,4 +14,14 @@ model Usuario {
   email      String  @unique @db.VarChar(255)
   username   String  @unique @db.VarChar(255)
   password   String  @db.VarChar(255)
+  meiId      Int?    @unique
+  mei        Mei?    @relation(fields: [meiId], references: [id])
+}
+
+model Mei {
+  id           Int      @id @default(autoincrement())
+  cnpj         String   @unique @db.VarChar(18)
+  nomeFantasia String   @db.VarChar(255)
+  razaoSocial  String   @db.VarChar(255)
+  usuario      Usuario?
 }

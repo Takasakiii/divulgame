@@ -14,6 +14,7 @@ export interface CadastroUserDto {
 export interface SimplifiedUser {
   id: number;
   username: string;
+  isMei: boolean;
 }
 
 export interface LoginDto {
@@ -85,6 +86,7 @@ class Login {
     return {
       id: user.id,
       username: user.username,
+      isMei: false,
     };
   }
 
@@ -113,6 +115,7 @@ class Login {
           user: {
             id: user.id,
             username: user.username,
+            isMei: user.meiId !== null,
           },
         };
       }
