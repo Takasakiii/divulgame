@@ -1,4 +1,4 @@
-import type { Controller } from "../../handler";
+import { Controller } from "../../handler";
 import { Router } from "express";
 import Usuario, {
   MeiDto,

@@ -42,7 +42,11 @@ function CadastroMeiPage() {
     };
 
     api
-      .post(`/users/${loginData?.user.id}/mei`, data)
+      .post(`/users/${loginData?.user.id}/mei`, data, {
+        headers: {
+          Authorization: loginData!.token,
+        },
+      })
       .then(() => {
         setModalState({
           open: true,

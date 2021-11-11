@@ -1,4 +1,4 @@
-import type { Controller } from "../../handler";
+import { Controller } from "../../handler";
 import { Router } from "express";
 import Usuario, { InvalidUserOrPassError, Login } from "../../database/usuario";
 import { InvalidArgsError, ErrorReponse } from "../../database";
@@ -13,8 +13,6 @@ const authRouter: Controller = (db) => {
       const result = await usuario.login(login);
       res.json(result);
     } catch (err) {
-      console.log(Object.getPrototypeOf(err).contructor);
-
       if (err instanceof InvalidUserOrPassError) {
         res
           .status(400)
