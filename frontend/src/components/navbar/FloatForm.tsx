@@ -12,7 +12,7 @@ function FloatFormComponent(props: FloatFormComponentProps) {
 
   return (
     <form
-      className="absolute p-4 top-12 bg-white rounded-md text-black right-0 w-max"
+      className="absolute p-4 top-12 bg-white rounded-md text-black right-0 w-max flex flex-col"
       onSubmit={onSubmitHandler}
     >
       {props.children}
