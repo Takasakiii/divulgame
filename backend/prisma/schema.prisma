@@ -19,9 +19,19 @@ model Usuario {
 }
 
 model Mei {
-  id           Int      @id @default(autoincrement())
-  cnpj         String   @unique @db.VarChar(18)
-  nomeFantasia String   @db.VarChar(255)
-  razaoSocial  String   @db.VarChar(255)
+  id           Int       @id @default(autoincrement())
+  cnpj         String    @unique @db.VarChar(18)
+  nomeFantasia String    @db.VarChar(255)
+  razaoSocial  String    @db.VarChar(255)
   usuario      Usuario?
+  anuncios     Anuncio[]
+}
+
+model Anuncio {
+  id          Int    @id @default(autoincrement())
+  titulo      String @db.VarChar(255)
+  descricao   String @db.VarChar(255)
+  tipoAnuncio Int    @db.Int
+  meiId       Int
+  mei         Mei    @relation(fields: [meiId], references: [id])
 }
