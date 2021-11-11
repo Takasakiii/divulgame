@@ -15,7 +15,7 @@ function SimpleButtonComponent(props: SimpleButtonComponentProps) {
   return (
     <button
       type={props.type}
-      className={`border-gray-200 border-solid border-2 p-2 rounded-md ${props.className}`}
+      className={`border-gray-200 border-solid border-2 pr-2 pl-2 rounded-md ${props.className}`}
       onClick={handleOnClick}
     >
       {props.children}

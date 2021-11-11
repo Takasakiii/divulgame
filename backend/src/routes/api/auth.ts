@@ -13,6 +13,8 @@ const authRouter: Controller = () => {
       const result = await usuario.login(login);
       res.json(result);
     } catch (err) {
+      console.log(Object.getPrototypeOf(err).contructor);
+
       if (err instanceof InvalidUserOrPassError) {
         res
           .status(400)

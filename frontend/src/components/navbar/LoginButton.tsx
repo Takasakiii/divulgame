@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { LoginResponse } from "../../api/api";
+
 import LoginFormComponent from "./LoginForm";
 
 export interface LoginButtonComponentProps {
@@ -13,12 +15,16 @@ function LoginButtonComponent(props: LoginButtonComponentProps) {
     setMenuOpened(!menuOpened);
   }
 
+  function handleLogin(data: LoginResponse) {
+    console.log(data);
+  }
+
   return (
     <div className="relative">
       <button type="button" onClick={handleMenuOpened}>
         Login
       </button>
-      {menuOpened && <LoginFormComponent />}
+      {menuOpened && <LoginFormComponent onLogin={handleLogin} />}
     </div>
   );
 }
