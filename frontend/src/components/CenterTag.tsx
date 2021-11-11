@@ -3,7 +3,7 @@ export interface CenterTagComponentProps {
 }
 
 function CenterTagComponent(props: CenterTagComponentProps) {
-  return <div className="flex justify-center">{props.children}</div>;
+  return <div className="flex items-center flex-col">{props.children}</div>;
 }
 
 export default CenterTagComponent;

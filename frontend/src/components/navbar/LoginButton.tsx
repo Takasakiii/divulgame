@@ -1,30 +1,37 @@
 import { useState } from "react";
-
-import { LoginResponse } from "../../api/api";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 import LoginFormComponent from "./LoginForm";
+import FloatFormComponent from "./FloatForm";
 
-export interface LoginButtonComponentProps {
-  isLoggedIn?: boolean;
-}
+function LoginButtonComponent() {
+  const loginData = useSelector((state: RootState) => state.login);
 
-function LoginButtonComponent(props: LoginButtonComponentProps) {
   const [menuOpened, setMenuOpened] = useState(false);
 
   function handleMenuOpened() {
     setMenuOpened(!menuOpened);
   }
 
-  function handleLogin(data: LoginResponse) {
-    console.log(data);
-  }
+  if (!loginData)
+    return (
+      <div className="relative">
+        <button type="button" onClick={handleMenuOpened}>
+          Login
+        </button>
+        {menuOpened && <LoginFormComponent />}
+      </div>
+    );
 
   return (
     <div className="relative">
       <button type="button" onClick={handleMenuOpened}>
-        Login
+        {loginData.user.username}
       </button>
-      {menuOpened && <LoginFormComponent />}
+      {menuOpened && (
+        <FloatFormComponent>Atualizar Para Mei</FloatFormComponent>
+      )}
     </div>
   );
 }
