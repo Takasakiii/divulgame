@@ -13,7 +13,11 @@ import ModalComponent from "../Modal";
 import { useDispatch } from "react-redux";
 import { Login as LoginAction } from "../../store/Login/Login.actions";
 
-function LoginFormComponent() {
+export interface LoginFormComponentProps {
+  onCloseForm?: () => void;
+}
+
+function LoginFormComponent(props: LoginFormComponentProps) {
   const dispatch = useDispatch();
 
   const [modalState, setModalState] = useState({
@@ -59,7 +63,11 @@ function LoginFormComponent() {
           <SimpleButtonComponent className="w-min mb-2" type="submit">
             Entrar
           </SimpleButtonComponent>
-          <Link to="/cadastro" className="text-blue-500">
+          <Link
+            to="/cadastro"
+            className="text-blue-500"
+            onClick={props.onCloseForm}
+          >
             Cadastrar-se
           </Link>
         </CenterTagComponent>

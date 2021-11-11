@@ -20,7 +20,7 @@ function LoginButtonComponent() {
         <button type="button" onClick={handleMenuOpened}>
           Login
         </button>
-        {menuOpened && <LoginFormComponent />}
+        {menuOpened && <LoginFormComponent onCloseForm={handleMenuOpened} />}
       </div>
     );
 
