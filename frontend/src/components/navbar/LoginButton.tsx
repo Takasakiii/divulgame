@@ -18,6 +18,7 @@ function LoginButtonComponent() {
   }
 
   function handleLogout() {
+    handleMenuOpened();
     dispatch(Logout());
   }
 
@@ -38,13 +39,22 @@ function LoginButtonComponent() {
       </button>
       {menuOpened && (
         <FloatFormComponent>
-          {!loginData.user.isMei && (
+          {!loginData.user.isMei ? (
             <LinkFormComponent
               to="/cadastro-mei"
               onClick={handleMenuOpened}
               className="mb-2"
             >
               Atualizar Para Mei
+            </LinkFormComponent>
+          ) : (
+            <LinkFormComponent
+              type="link"
+              onClick={handleMenuOpened}
+              to="servicos/adicionar"
+              className="mb-2"
+            >
+              Adicionar Serviço / Produto
             </LinkFormComponent>
           )}
           <LinkFormComponent type="button" onClick={handleLogout}>
