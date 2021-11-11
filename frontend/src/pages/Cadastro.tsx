@@ -37,7 +37,7 @@ function CadastroPage() {
 
     api
       .post("/users", data)
-      .then((data) => {
+      .then((_data) => {
         setModalState({
           open: true,
           message: "Cadastro realizado com sucesso!",
