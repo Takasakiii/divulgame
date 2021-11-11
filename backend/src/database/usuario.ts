@@ -108,8 +108,8 @@ export class MeiDto {
     if (!this.razaoSocial)
       throw new InvalidArgsError("Razão social é obrigatório");
 
-    if (this.cnpj.length < 14)
-      throw new InvalidArgsError("CNPJ deve ter no mínimo 14 caracteres");
+    if (this.cnpj.length != 14)
+      throw new InvalidArgsError("CNPJ deve ter 14 caracteres");
     if (this.nomeFantasia.length < 3)
       throw new InvalidArgsError(
         "Nome fantasia deve ter no mínimo 3 caracteres"
