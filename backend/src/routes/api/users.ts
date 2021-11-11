@@ -3,12 +3,12 @@ import { Router } from "express";
 import Usuario, { UsuarioDto } from "../../database/usuario";
 import { InvalidArgsError, ErrorReponse } from "../../database";
 
-const users: Controller = () => {
+const users: Controller = (db) => {
   const router = Router();
 
   router.post("/", async (req, res) => {
     try {
-      const usuario = new Usuario();
+      const usuario = new Usuario(db);
       const body = new UsuarioDto(req.body);
       const responseUsuario = await usuario.create(body);
       res.status(201).json(responseUsuario);

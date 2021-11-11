@@ -91,8 +91,8 @@ export interface JwtPayload {
 class Usuario {
   private prisma: PrismaClient;
 
-  constructor() {
-    this.prisma = new PrismaClient();
+  constructor(db: PrismaClient) {
+    this.prisma = db;
   }
 
   async create(user: UsuarioDto): Promise<SimplifiedUser> {

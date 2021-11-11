@@ -3,13 +3,13 @@ import { Router } from "express";
 import Usuario, { InvalidUserOrPassError, Login } from "../../database/usuario";
 import { InvalidArgsError, ErrorReponse } from "../../database";
 
-const authRouter: Controller = () => {
+const authRouter: Controller = (db) => {
   const router = Router();
 
   router.post("/", async (req, res) => {
     try {
       const login = new Login(req.body);
-      const usuario = new Usuario();
+      const usuario = new Usuario(db);
       const result = await usuario.login(login);
       res.json(result);
     } catch (err) {
