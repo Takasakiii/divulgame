@@ -24,7 +24,7 @@ function LoginButtonComponent(props: LoginButtonComponentProps) {
       <button type="button" onClick={handleMenuOpened}>
         Login
       </button>
-      {menuOpened && <LoginFormComponent onLogin={handleLogin} />}
+      {menuOpened && <LoginFormComponent />}
     </div>
   );
 }

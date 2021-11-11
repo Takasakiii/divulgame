@@ -8,11 +8,7 @@ import SimpleButtonComponent from "../SimpleButton";
 import CenterTagComponent from "../CenterTag";
 import ModalComponent from "../Modal";
 
-export interface LoginFormComponentProps {
-  onLogin?: (data: LoginResponse) => void;
-}
-
-function LoginFormComponent(props: LoginFormComponentProps) {
+function LoginFormComponent() {
   const [modalState, setModalState] = useState({
     opened: false,
     message: "",
@@ -33,9 +29,6 @@ function LoginFormComponent(props: LoginFormComponentProps) {
       .post("/auth/", login)
       .then((response) => {
         const data = response.data as LoginResponse;
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        props.onLogin && props.onLogin(data);
       })
       .catch((error: AxiosError) => {
         setModalState({ opened: true, message: error.response?.data.error });
