@@ -88,6 +88,39 @@ export interface JwtPayload {
   username: string;
 }
 
+export class MeiDto {
+  cnpj: string;
+  nomeFantasia: string;
+  razaoSocial: string;
+
+  constructor({ cnpj, nomeFantasia, razaoSocial }: MeiDto) {
+    this.cnpj = cnpj;
+    this.nomeFantasia = nomeFantasia;
+    this.razaoSocial = razaoSocial;
+
+    this.validate();
+  }
+
+  validate() {
+    if (!this.cnpj) throw new InvalidArgsError("CNPJ é obrigatório");
+    if (!this.nomeFantasia)
+      throw new InvalidArgsError("Nome fantasia é obrigatório");
+    if (!this.razaoSocial)
+      throw new InvalidArgsError("Razão social é obrigatório");
+
+    if (this.cnpj.length < 14)
+      throw new InvalidArgsError("CNPJ deve ter no mínimo 14 caracteres");
+    if (this.nomeFantasia.length < 3)
+      throw new InvalidArgsError(
+        "Nome fantasia deve ter no mínimo 3 caracteres"
+      );
+    if (this.razaoSocial.length < 3)
+      throw new InvalidArgsError(
+        "Razão social deve ter no mínimo 3 caracteres"
+      );
+  }
+}
+
 class Usuario {
   private prisma: PrismaClient;
 
@@ -145,6 +178,25 @@ class Usuario {
     }
 
     throw new InvalidUserOrPassError();
+  }
+
+  async addMeiData(idUsuario: number, meiDto: MeiDto) {
+    const mei = await this.prisma.mei.create({
+      data: {
+        cnpj: meiDto.cnpj,
+        nomeFantasia: meiDto.nomeFantasia,
+        razaoSocial: meiDto.razaoSocial,
+      },
+    });
+
+    await this.prisma.usuario.update({
+      data: {
+        meiId: mei.id,
+      },
+      where: {
+        id: idUsuario,
+      },
+    });
   }
 }
 

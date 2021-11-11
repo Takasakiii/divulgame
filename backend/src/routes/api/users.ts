@@ -1,6 +1,6 @@
 import type { Controller } from "../../handler";
 import { Router } from "express";
-import Usuario, { UsuarioDto } from "../../database/usuario";
+import Usuario, { MeiDto, UsuarioDto } from "../../database/usuario";
 import { InvalidArgsError, ErrorReponse } from "../../database";
 
 const users: Controller = (db) => {
@@ -26,6 +26,24 @@ const users: Controller = (db) => {
             .status(500)
             .json({ error: "Internal Server Error" } as ErrorReponse);
         }
+      }
+    }
+  });
+
+  router.post("/:id/mei", async (req, res) => {
+    try {
+      const usuario = new Usuario(db);
+      const body = new MeiDto(req.body);
+      await usuario.addMeiData(parseInt(req.params.id), body);
+      res.status(200).json({ success: true });
+    } catch (err) {
+      if (err instanceof InvalidArgsError) {
+        res.status(400).json({ error: err.message } as ErrorReponse);
+      } else {
+        console.error(err);
+        res
+          .status(500)
+          .json({ error: "Internal Server Error" } as ErrorReponse);
       }
     }
   });
