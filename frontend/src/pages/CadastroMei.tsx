@@ -74,6 +74,9 @@ function CadastroMeiPage() {
     <>
       <CenterTagComponent>
         <FormComponent className="mt-10" onSubmit={handleSubmit}>
+          <h1 className="text-3xl">
+            <b>Cadastro MEI</b>
+          </h1>
           <InputTextComponent label="CNPJ:" onChange={setCnpj} />
           <InputTextComponent
             label="Nome fantasia:"

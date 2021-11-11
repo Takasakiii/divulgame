@@ -64,6 +64,9 @@ function CadastroPage() {
     <>
       <CenterTagComponent>
         <FormComponent className="mt-10" onSubmit={handleSubmit}>
+          <h1 className="text-3xl">
+            <b>Cadastro</b>
+          </h1>
           <InputTextComponent label="Nome Completo:" onChange={setNome} />
           <InputTextComponent label="Nome Social:" onChange={setNomeSocial} />
           <InputTextComponent label="Email:" onChange={setEmail} />

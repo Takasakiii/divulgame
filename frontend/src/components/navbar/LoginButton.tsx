@@ -33,7 +33,7 @@ function LoginButtonComponent() {
       {menuOpened && (
         <FloatFormComponent>
           {!loginData.user.isMei && (
-            <LinkFormComponent to="/cadastro-mei">
+            <LinkFormComponent to="/cadastro-mei" onClick={handleMenuOpened}>
               Atualizar Para Mei
             </LinkFormComponent>
           )}
