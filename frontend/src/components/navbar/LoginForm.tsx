@@ -39,6 +39,7 @@ function LoginFormComponent(props: LoginFormComponentProps) {
       .then((response) => {
         const data = response.data as LoginResponse;
         dispatch(LoginAction(data));
+        props.onCloseForm && props.onCloseForm();
       })
       .catch((error: AxiosError) => {
         setModalState({ opened: true, message: error.response?.data.error });
@@ -68,7 +69,7 @@ function LoginFormComponent(props: LoginFormComponentProps) {
             className="text-blue-500"
             onClick={props.onCloseForm}
           >
-            Cadastrar-se
+            Cadastre-se
           </Link>
         </CenterTagComponent>
       </FloatFormComponent>

@@ -24,6 +24,12 @@ export interface UsuarioDto {
   username: string;
 }
 
+export interface MeiDto {
+  cnpj: string;
+  nomeFantasia: string;
+  razaoSocial: string;
+}
+
 export const api = axios.create({
   baseURL: "http://localhost:2000/api",
   headers: {

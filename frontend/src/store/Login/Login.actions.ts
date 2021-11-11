@@ -9,3 +9,10 @@ export function Login(
     payload: loginResponseData,
   };
 }
+
+export function MeiUpgrade(): PayloadAction<null> {
+  return {
+    type: "MEI_UPGRADE",
+    payload: null,
+  };
+}

@@ -4,6 +4,7 @@ import { RootState } from "../../store";
 
 import LoginFormComponent from "./LoginForm";
 import FloatFormComponent from "./FloatForm";
+import LinkFormComponent from "./LinkForm";
 
 function LoginButtonComponent() {
   const loginData = useSelector((state: RootState) => state.login);
@@ -30,7 +31,13 @@ function LoginButtonComponent() {
         {loginData.user.username}
       </button>
       {menuOpened && (
-        <FloatFormComponent>Atualizar Para Mei</FloatFormComponent>
+        <FloatFormComponent>
+          {!loginData.user.isMei && (
+            <LinkFormComponent to="/cadastro-mei">
+              Atualizar Para Mei
+            </LinkFormComponent>
+          )}
+        </FloatFormComponent>
       )}
     </div>
   );
