@@ -16,3 +16,10 @@ export function MeiUpgrade(): PayloadAction<null> {
     payload: null,
   };
 }
+
+export function Logout(): PayloadAction<null> {
+  return {
+    type: "LOGOUT",
+    payload: null,
+  };
+}

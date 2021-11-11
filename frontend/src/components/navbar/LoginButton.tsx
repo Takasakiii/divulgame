@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
+import { Logout } from "../../store/Login/Login.actions";
 
 import LoginFormComponent from "./LoginForm";
 import FloatFormComponent from "./FloatForm";
@@ -8,11 +9,16 @@ import LinkFormComponent from "./LinkForm";
 
 function LoginButtonComponent() {
   const loginData = useSelector((state: RootState) => state.login);
+  const dispatch = useDispatch();
 
   const [menuOpened, setMenuOpened] = useState(false);
 
   function handleMenuOpened() {
     setMenuOpened(!menuOpened);
+  }
+
+  function handleLogout() {
+    dispatch(Logout());
   }
 
   if (!loginData)
@@ -37,6 +43,9 @@ function LoginButtonComponent() {
               Atualizar Para Mei
             </LinkFormComponent>
           )}
+          <LinkFormComponent type="button" onClick={handleLogout}>
+            Deslogar
+          </LinkFormComponent>
         </FloatFormComponent>
       )}
     </div>

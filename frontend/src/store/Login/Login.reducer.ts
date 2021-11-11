@@ -17,6 +17,8 @@ function LoginReducer(
         },
         token: state.token,
       };
+    case "LOGOUT":
+      return null;
     default:
       return state;
   }
