@@ -16,6 +16,14 @@ export interface LoginResponse {
   user: SimplifiedUser;
 }
 
+export interface UsuarioDto {
+  nome: string;
+  nomeSocial?: string;
+  email: string;
+  senha: string;
+  username: string;
+}
+
 export const api = axios.create({
   baseURL: "http://localhost:2000/api",
   headers: {
