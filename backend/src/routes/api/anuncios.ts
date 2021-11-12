@@ -68,6 +68,7 @@ const anuncioRouter: Controller = (db) => {
         }));
         const database = new FotosAnuncios(db);
         await database.create(loggedUserId, idAnuncio, fotos);
+        res.status(201).json({ message: "Fotos enviadas com sucesso" });
       } catch (err) {
         if (err instanceof InvalidArgsError) {
           res.status(400).json({ error: err.message } as ErrorReponse);
