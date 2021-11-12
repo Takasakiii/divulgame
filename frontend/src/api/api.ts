@@ -30,6 +30,17 @@ export interface MeiDto {
   razaoSocial: string;
 }
 
+export enum TipoAnuncio {
+  Produto,
+  Servico,
+}
+
+export interface AnuncioDto {
+  titulo: string;
+  descricao: string;
+  tipoAnuncio: TipoAnuncio;
+}
+
 export const api = axios.create({
   baseURL: "http://localhost:2000/api",
   headers: {
