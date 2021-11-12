@@ -1,5 +1,5 @@
 import { PrismaClient, Anuncio as PrismaAnuncio } from "@prisma/client";
-import { InvalidArgsError } from ".";
+import { InvalidArgsError, InconstantDataError } from ".";
 
 export enum TipoAnuncio {
   Produto,
@@ -38,12 +38,19 @@ class Anuncio {
   }
 
   async create(data: AnuncioDto, userId: number): Promise<PrismaAnuncio> {
+    const userData = await this.prisma.usuario.findFirst({
+      where: { id: userId },
+    });
+
+    if (!userData) throw new InconstantDataError("Usuário não encontrado");
+    if (!userData.meiId) throw new InconstantDataError("Usuário não é MEI");
+
     const anuncio = await this.prisma.anuncio.create({
       data: {
         titulo: data.titulo,
         descricao: data.descricao,
         tipoAnuncio: data.tipoAnuncio,
-        meiId: userId,
+        meiId: userData.meiId,
       },
     });
 
