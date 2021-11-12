@@ -16,3 +16,9 @@
 DATABASE_URL=mysql://seu_user:sua_senha@host_mysql:port_mysql/nome_da_db
 JWT_SECRET=secret_value
 ```
+
+### Licença de Terceiros:
+
+Todos os svgs da `frontend/src/assets/svgs` são de total autoria da [iconmonstr](https://iconmonstr.com) sobre a licença: https://iconmonstr.com/license/
+
+Todo resto do projeto é de Dominio Público.

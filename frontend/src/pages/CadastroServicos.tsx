@@ -14,6 +14,9 @@ import TextAreaComponent from "../components/TextArea";
 import SelectComponent from "../components/Select";
 import SimpleButtonComponent from "../components/SimpleButton";
 import ModalComponent from "../components/Modal";
+import FotosListaAddComponent from "../components/images-add/FotosListaAdd";
+import FotosAddButtonComponent from "../components/images-add/FotosAddButton";
+import FotoItemViewComponent from "../components/images-add/FotoItemView";
 
 function CadastroServicosPage() {
   const loggedUser = useSelector((state: RootState) => state.login);
@@ -28,6 +31,7 @@ function CadastroServicosPage() {
   const [title, setTitle] = useState("");
   const [descricao, setDescricao] = useState("");
   const [selectedTipoAnuncio, setSelectedTipoAnuncio] = useState(0);
+  const [fotos, setFotos] = useState<File[]>([]);
 
   if (loggedUser === null || !loggedUser.user.isMei) {
     navigate("/");
@@ -76,6 +80,10 @@ function CadastroServicosPage() {
     });
   }
 
+  function onAddFotos(newFotos: File[]) {
+    setFotos(fotos.concat(newFotos));
+  }
+
   return (
     <>
       <CenterTagComponent>
@@ -93,8 +101,13 @@ function CadastroServicosPage() {
             ]}
             onChange={setSelectedTipoAnuncio}
             selectedItem={selectedTipoAnuncio}
-            className="mb-4"
           />
+          <FotosListaAddComponent label="Fotos:" className="mb-4">
+            {fotos.map((foto, index) => (
+              <FotoItemViewComponent key={index} foto={foto} />
+            ))}
+            <FotosAddButtonComponent onClick={onAddFotos} />
+          </FotosListaAddComponent>
           <CenterTagComponent>
             <SimpleButtonComponent type="submit">Salvar</SimpleButtonComponent>
           </CenterTagComponent>
