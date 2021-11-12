@@ -22,3 +22,10 @@ export class InconstantDataError extends InvalidArgsError {
 export interface ErrorReponse {
   error: string;
 }
+
+export class InvalidFileTypeError extends InvalidArgsError {
+  constructor(message: string) {
+    super(message);
+    this.name = "InvalidFileTypeError";
+  }
+}
