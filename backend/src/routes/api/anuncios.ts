@@ -20,6 +20,7 @@ const anuncioRouter: Controller = (db) => {
       if (err instanceof InvalidArgsError) {
         res.status(400).json({ error: err.message } as ErrorReponse);
       } else {
+        console.error(err);
         res
           .status(500)
           .json({ error: "Internal server error" } as ErrorReponse);
