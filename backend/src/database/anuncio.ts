@@ -21,9 +21,6 @@ export class AnuncioDto {
   validate() {
     if (!this.titulo) throw new InvalidArgsError("Titulo é obrigatório");
     if (!this.descricao) throw new InvalidArgsError("Descrição é obrigatório");
-    if (!this.tipoAnuncio)
-      throw new InvalidArgsError("Tipo de anúncio é obrigatório");
-
     if (this.tipoAnuncio < 0 || this.tipoAnuncio > 1)
       throw new InvalidArgsError("Tipo de anúncio inválido");
     if (this.titulo.length < 5)
