@@ -49,6 +49,18 @@ export interface Anuncio {
   meiId: number;
 }
 
+export interface AnuncioForMany {
+  id: number;
+  titulo: string;
+  descricao: string;
+  tipo: TipoAnuncio;
+  fotos: number[];
+  user: {
+    id: number;
+    nomeFantasia: string;
+  };
+}
+
 export const api = axios.create({
   baseURL: "http://localhost:2000/api",
   headers: {

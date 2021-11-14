@@ -1,0 +1,22 @@
+.card-component {
+  width: 400px;
+  height: 132px;
+}
+
+.card-component img {
+  width: 100px;
+  height: 100px;
+}
+
+.card-component p {
+  word-wrap: break-word;
+  width: 100%;
+}
+
+@media (max-width: 435px) {
+  .card-component {
+    margin: 1px 0 1px 0;
+    width: 100%;
+    border-radius: 0;
+  }
+}
