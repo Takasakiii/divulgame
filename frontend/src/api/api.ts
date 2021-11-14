@@ -41,6 +41,14 @@ export interface AnuncioDto {
   tipoAnuncio: TipoAnuncio;
 }
 
+export interface Anuncio {
+  id: number;
+  titulo: string;
+  descricao: string;
+  tipoAnuncio: TipoAnuncio;
+  meiId: number;
+}
+
 export const api = axios.create({
   baseURL: "http://localhost:2000/api",
   headers: {

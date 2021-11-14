@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
-import { AnuncioDto, api } from "../api/api";
+import { AnuncioDto, api, Anuncio } from "../api/api";
 import { AxiosError } from "axios";
 
 import { useSelector } from "react-redux";
@@ -50,6 +50,21 @@ function CadastroServicosPage() {
         headers: {
           Authorization: loggedUser!.token,
         },
+      })
+      .then((data) => {
+        const { id: idAnuncio }: Anuncio = data.data;
+
+        const formData = new FormData();
+        fotos.forEach((foto) => {
+          formData.append("fotos", foto);
+        });
+
+        return api.post(`/anuncios/${idAnuncio}/fotos`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: loggedUser!.token,
+          },
+        });
       })
       .then(() => {
         setModalState({
