@@ -6,6 +6,16 @@ export enum TipoAnuncio {
   Servico,
 }
 
+export interface AnuncioForMany {
+  id: number;
+  titulo: string;
+  descricao: string;
+  tipo: TipoAnuncio;
+  user: {
+    id: number;
+    nomeFantasia: string;
+  };
+}
 export class AnuncioDto {
   titulo: string;
   descricao: string;
@@ -55,6 +65,37 @@ class Anuncio {
     });
 
     return anuncio;
+  }
+
+  async findAll(): Promise<AnuncioForMany[]> {
+    const anuncios = await this.prisma.anuncio.findMany({
+      include: {
+        mei: {
+          include: {
+            usuario: true,
+          },
+        },
+      },
+    });
+
+    const result: AnuncioForMany[] = anuncios.map((anuncio) => {
+      if (!anuncio.mei) throw new InconstantDataError("Anúncio sem MEI");
+      if (!anuncio.mei.usuario)
+        throw new InconstantDataError("Anúncio sem Usuário");
+
+      return {
+        id: anuncio.id,
+        titulo: anuncio.titulo,
+        descricao: anuncio.descricao,
+        tipo: anuncio.tipoAnuncio,
+        user: {
+          id: anuncio.mei.usuario.id,
+          nomeFantasia: anuncio.mei.nomeFantasia,
+        },
+      };
+    });
+
+    return result;
   }
 }
 

@@ -63,7 +63,7 @@ const anuncioRouter: Controller = (db) => {
         }
 
         const fotos: FotosSavedInfo[] = multerFiles.map((foto) => ({
-          path: foto.path,
+          path: foto.filename,
           mimeType: foto.mimetype,
         }));
         const database = new FotosAnuncios(db);
@@ -80,6 +80,17 @@ const anuncioRouter: Controller = (db) => {
         }
       }
     });
+  });
+
+  router.get("/", async (_req, res) => {
+    try {
+      const anuncio = new Anuncio(db);
+      const result = await anuncio.findAll();
+      res.status(200).json(result);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Internal server error" } as ErrorReponse);
+    }
   });
 
   return {
