@@ -11,7 +11,7 @@ export interface AnuncioForMany {
   titulo: string;
   descricao: string;
   tipo: TipoAnuncio;
-  fotos: number[];
+  icone: number | null;
   user: {
     id: number;
     nomeFantasia: string;
@@ -94,7 +94,7 @@ class Anuncio {
           id: anuncio.mei.usuario.id,
           nomeFantasia: anuncio.mei.nomeFantasia,
         },
-        fotos: anuncio.fotos.map((foto) => foto.id),
+        icone: anuncio.fotos.length > 0 ? anuncio.fotos[0].id : null,
       };
     });
 
