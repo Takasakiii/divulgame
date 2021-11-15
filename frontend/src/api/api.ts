@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const baseURL = "http://localhost:2000";
+
 export interface Login {
   usuario: string;
   password: string;
@@ -62,8 +64,12 @@ export interface AnuncioForMany {
 }
 
 export const api = axios.create({
-  baseURL: "http://localhost:2000/api",
+  baseURL: `${baseURL}/api`,
   headers: {
     "Content-Type": "application/json",
   },
 });
+
+export function fotoUrl(id: number): string {
+  return `${baseURL}/images/${id}`;
+}

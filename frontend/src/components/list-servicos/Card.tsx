@@ -1,4 +1,4 @@
-import { AnuncioForMany } from "../../api/api";
+import { AnuncioForMany, fotoUrl } from "../../api/api";
 
 import { Link } from "react-router-dom";
 
@@ -15,9 +15,9 @@ function CardComponent(props: CardComponentProps) {
       <Link to="/" className="flex p-4">
         {props.anuncio.fotos.length > 0 ? (
           <img
-            src="https://google.com/google.jpg"
+            src={fotoUrl(props.anuncio.fotos[0])}
             alt="Foto inical do anuncio"
-            className="object-cover object-center mr-2"
+            className="object-cover object-center mr-2 rounded-md"
           />
         ) : (
           <div className="no-image mr-2">
