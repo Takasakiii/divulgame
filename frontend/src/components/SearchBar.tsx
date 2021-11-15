@@ -23,7 +23,7 @@ function SearchBarComponent(props: SearchBarComponentProps) {
   }
 
   return (
-    <div className="m-4">
+    <div className="ml-28 mr-28 mt-4 mb-4">
       <input
         type="text"
         placeholder="Pesquisar..."
