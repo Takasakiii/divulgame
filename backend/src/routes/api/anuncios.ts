@@ -7,6 +7,7 @@ import {
   ErrorReponse,
   InvalidArgsError,
   InvalidFileTypeError,
+  NotFoundError,
 } from "../../database";
 import multer from "multer";
 import FotosAnuncios, { FotosSavedInfo } from "../../database/fotosAnuncios";
@@ -96,6 +97,28 @@ const anuncioRouter: Controller = (db) => {
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Internal server error" } as ErrorReponse);
+    }
+  });
+
+  router.get("/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const anuncio = new Anuncio(db);
+      const result = await anuncio.get(id);
+      return res.status(200).json(result);
+    } catch (err) {
+      if (err instanceof NotFoundError) {
+        return res.status(404).json({ error: err.message } as ErrorReponse);
+      }
+
+      if (err instanceof InvalidArgsError) {
+        return res.status(500).json({ error: err.message } as ErrorReponse);
+      }
+
+      console.error(err);
+      return res
+        .status(500)
+        .json({ error: "Internal server error" } as ErrorReponse);
     }
   });
 

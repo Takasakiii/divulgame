@@ -1,22 +1,33 @@
 import { PrismaClient, Anuncio as PrismaAnuncio } from "@prisma/client";
-import { InvalidArgsError, InconstantDataError } from ".";
+import { InvalidArgsError, InconstantDataError, NotFoundError } from ".";
 
 export enum TipoAnuncio {
   Produto,
   Servico,
 }
 
+export interface UserAnuncio {
+  id: number;
+  nomeFantasia: string;
+}
 export interface AnuncioForMany {
   id: number;
   titulo: string;
   descricao: string;
   tipo: TipoAnuncio;
   icone: number | null;
-  user: {
-    id: number;
-    nomeFantasia: string;
-  };
+  user: UserAnuncio;
 }
+
+export interface AnuncioOne {
+  id: number;
+  titulo: string;
+  descricao: string;
+  tipo: TipoAnuncio;
+  fotos: number[];
+  user: UserAnuncio;
+}
+
 export class AnuncioDto {
   titulo: string;
   descricao: string;
@@ -151,6 +162,39 @@ class Anuncio {
     );
 
     return result;
+  }
+
+  async get(id: number): Promise<AnuncioOne> {
+    const anuncio = await this.prisma.anuncio.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        mei: {
+          include: {
+            usuario: true,
+          },
+        },
+        fotos: true,
+      },
+    });
+
+    if (!anuncio) throw new NotFoundError("Anúncio não encontrado");
+    if (!anuncio.mei) throw new InconstantDataError("Anúncio sem MEI");
+    if (!anuncio.mei.usuario)
+      throw new InconstantDataError("Anúncio sem Usuário");
+
+    return {
+      id: anuncio.id,
+      titulo: anuncio.titulo,
+      descricao: anuncio.descricao,
+      tipo: anuncio.tipoAnuncio,
+      fotos: anuncio.fotos.map((foto) => foto.id),
+      user: {
+        id: anuncio.mei.usuario.id,
+        nomeFantasia: anuncio.mei.nomeFantasia,
+      },
+    };
   }
 }
 

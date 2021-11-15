@@ -29,3 +29,10 @@ export class InvalidFileTypeError extends InvalidArgsError {
     this.name = "InvalidFileTypeError";
   }
 }
+
+export class NotFoundError extends InvalidArgsError {
+  constructor(message: string) {
+    super(message);
+    this.name = "NotFoundError";
+  }
+}
