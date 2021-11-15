@@ -2,18 +2,26 @@ import { useRef, useEffect } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/themes/splide-default.min.css";
 
-function SliderComponents({ images, className }) {
-  const mainSlider = useRef(null);
-  const subSlider = useRef(null);
+export interface SliderComponentProps {
+  images: string[];
+  className?: string;
+}
+
+function SliderComponents(props: SliderComponentProps) {
+  const mainSlider = useRef<Splide>(null);
+  const subSlider = useRef<Splide>(null);
 
   useEffect(() => {
-    mainSlider.current.sync(subSlider.current.splide);
+    subSlider.current &&
+      subSlider.current.splide &&
+      mainSlider.current?.sync(subSlider.current.splide);
   }, []);
 
   return (
-    <div>
+    <div className={`w-10/12 h-2/6 ${props.className}`}>
       <Splide
         ref={mainSlider}
+        className="mb-2"
         options={{
           type: "loop",
           perPage: 1,
@@ -21,9 +29,12 @@ function SliderComponents({ images, className }) {
           gap: "1rem",
           pagination: false,
           arrows: false,
+          width: "100%",
+          height: "700px",
+          cover: true,
         }}
       >
-        {images.map((image, index) => (
+        {props.images.map((image, index) => (
           <SplideSlide key={index}>
             <img src={image} alt={`${index + 1} imagem`} />
           </SplideSlide>
@@ -31,6 +42,7 @@ function SliderComponents({ images, className }) {
       </Splide>
       <Splide
         ref={subSlider}
+        className="sub-slider"
         options={{
           type: "slide",
           rewind: true,
@@ -45,7 +57,7 @@ function SliderComponents({ images, className }) {
           updateOnMove: true,
         }}
       >
-        {images.map((image, index) => (
+        {props.images.map((image, index) => (
           <SplideSlide key={index}>
             <img src={image} alt={`${index + 1} imagem`} />
           </SplideSlide>
