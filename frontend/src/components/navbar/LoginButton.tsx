@@ -51,7 +51,7 @@ function LoginButtonComponent() {
             <LinkFormComponent
               type="link"
               onClick={handleMenuOpened}
-              to="servicos/adicionar"
+              to="anuncios/adicionar"
               className="mb-2"
             >
               Adicionar Serviço / Produto
