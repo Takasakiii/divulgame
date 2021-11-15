@@ -8,9 +8,25 @@
   height: 100px;
 }
 
+.card-component .no-image {
+  min-width: 100px;
+  max-width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card-component .no-image img {
+  width: 40px;
+  height: 40px;
+}
+
 .card-component p {
-  word-wrap: break-word;
-  width: 100%;
+  text-align: justify;
+  height: 72px;
+  overflow-y: auto;
 }
 
 @media (max-width: 435px) {
