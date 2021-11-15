@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-import { InconstantDataError } from ".";
+import { InconstantDataError, InvalidArgsError } from ".";
+import fs from "fs/promises";
+import path from "path";
 
 export interface FotosSavedInfo {
   path: string;
@@ -47,6 +49,23 @@ class FotosAnuncios {
     );
 
     await Promise.all(promises);
+  }
+
+  async getFoto(id: number): Promise<{ foto: Buffer; mimeType: string }> {
+    const foto = await this.prisma.fotosAnuncios.findFirst({
+      where: { id },
+    });
+
+    if (!foto) throw new InvalidArgsError("Foto não existe");
+
+    const fotoBytes = await fs.readFile(
+      path.join(__dirname, "..", "..", "uploads", foto.path)
+    );
+
+    return {
+      foto: fotoBytes,
+      mimeType: foto.mimeType,
+    };
   }
 }
 
