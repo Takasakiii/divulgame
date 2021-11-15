@@ -100,6 +100,58 @@ class Anuncio {
 
     return result;
   }
+
+  async find(search: string): Promise<AnuncioForMany[]> {
+    const anuncios = await this.prisma.anuncio.findMany({
+      include: {
+        mei: {
+          include: {
+            usuario: true,
+          },
+        },
+        fotos: true,
+      },
+      where: {
+        OR: [
+          {
+            titulo: {
+              contains: search,
+            },
+          },
+          {
+            descricao: { contains: search },
+          },
+        ],
+      },
+    });
+
+    const result: AnuncioForMany[] = anuncios.map(
+      ({
+        id,
+        mei: { usuario, nomeFantasia },
+        descricao,
+        fotos,
+        titulo,
+        tipoAnuncio,
+      }) => {
+        if (!usuario) throw new InconstantDataError("Anúncio sem Usuário");
+
+        return {
+          id,
+          descricao,
+          titulo,
+          icone: fotos.length > 0 ? fotos[0].id : null,
+          tipo: tipoAnuncio,
+          user: {
+            id: usuario.id,
+            nomeFantasia,
+          },
+        };
+      }
+    );
+
+    return result;
+  }
 }
 
 export default Anuncio;

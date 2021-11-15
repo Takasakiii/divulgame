@@ -82,11 +82,17 @@ const anuncioRouter: Controller = (db) => {
     });
   });
 
-  router.get("/", async (_req, res) => {
+  router.get("/", async (req, res) => {
     try {
+      const searchParams = req.query.search;
       const anuncio = new Anuncio(db);
-      const result = await anuncio.findAll();
-      res.status(200).json(result);
+      if (!searchParams) {
+        const result = await anuncio.findAll();
+        return res.status(200).json(result);
+      }
+
+      const searchResult = await anuncio.find(searchParams.toString());
+      return res.status(200).json(searchResult);
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Internal server error" } as ErrorReponse);
