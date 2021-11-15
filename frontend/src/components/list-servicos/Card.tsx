@@ -13,9 +13,9 @@ function CardComponent(props: CardComponentProps) {
   return (
     <div className="bg-white m-4 rounded-md card-component">
       <Link to="/" className="flex p-4">
-        {props.anuncio.fotos.length > 0 ? (
+        {props.anuncio.icone ? (
           <img
-            src={fotoUrl(props.anuncio.fotos[0])}
+            src={fotoUrl(props.anuncio.icone)}
             alt="Foto inical do anuncio"
             className="object-cover object-center mr-2 rounded-md"
           />

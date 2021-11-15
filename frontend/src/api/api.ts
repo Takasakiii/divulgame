@@ -56,7 +56,7 @@ export interface AnuncioForMany {
   titulo: string;
   descricao: string;
   tipo: TipoAnuncio;
-  fotos: number[];
+  icone: number | null;
   user: {
     id: number;
     nomeFantasia: string;
