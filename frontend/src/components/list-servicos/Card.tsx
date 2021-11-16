@@ -3,7 +3,7 @@ import { AnuncioForMany, fotoUrl } from "../../api/api";
 import { Link } from "react-router-dom";
 
 import CrossSvg from "../../assets/svgs/iconmonstr-x-mark-4.svg";
-import "./Card.css";
+import style from "./Card.module.css";
 
 export interface CardComponentProps {
   anuncio: AnuncioForMany;
@@ -11,16 +11,16 @@ export interface CardComponentProps {
 
 function CardComponent(props: CardComponentProps) {
   return (
-    <div className="bg-white m-4 rounded-md card-component">
+    <div className={`bg-white m-4 rounded-md ${style.cardComponent}`}>
       <Link to={`anuncios/${props.anuncio.id}`} className="flex p-4">
         {props.anuncio.icone ? (
           <img
             src={fotoUrl(props.anuncio.icone)}
             alt="Foto inical do anuncio"
-            className="object-cover object-center mr-2 rounded-md"
+            className={`object-cover object-center mr-2 rounded-md ${style.cardImg}`}
           />
         ) : (
-          <div className="no-image mr-2">
+          <div className={`${style.noImage} mr-2`}>
             <img src={CrossSvg} alt="No Icon" />
             <span>Sem Imagem</span>
           </div>

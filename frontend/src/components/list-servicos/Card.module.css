@@ -1,14 +1,14 @@
-.card-component {
+.cardComponent {
   width: 400px;
   height: 132px;
 }
 
-.card-component img {
+.cardImg {
   width: 100px;
   height: 100px;
 }
 
-.card-component .no-image {
+.noImage {
   min-width: 100px;
   max-width: 100px;
   height: 100px;
@@ -18,19 +18,19 @@
   flex-direction: column;
 }
 
-.card-component .no-image img {
+.noImage img {
   width: 40px;
   height: 40px;
 }
 
-.card-component p {
+.cardComponent p {
   text-align: justify;
   height: 72px;
   overflow-y: auto;
 }
 
 @media (max-width: 435px) {
-  .card-component {
+  .cardComponent {
     margin: 1px 0 1px 0;
     width: 100%;
     border-radius: 0;
