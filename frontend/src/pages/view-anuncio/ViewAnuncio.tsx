@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AnuncioOne, api, fotoUrl, tipoAnuncioToString } from "../api/api";
+import { AnuncioOne, api, fotoUrl, tipoAnuncioToString } from "../../api/api";
 import { AxiosError } from "axios";
-import { useScreenSize } from "../helpers/hooks";
+import { useScreenSize } from "../../helpers/hooks";
 
-import SliderComponent from "../components/slider/Slider";
-import ComentariosComponent from "../components/Comentarios";
+import SliderComponent from "../../components/slider/Slider";
+import ComentariosComponent from "../../components/Comentarios";
 
-import CrossSvg from "../assets/svgs/iconmonstr-x-mark-4.svg";
+import CrossSvg from "../../assets/svgs/iconmonstr-x-mark-4.svg";
 
 import style from "./ViewAnuncio.module.css";
 

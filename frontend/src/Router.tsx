@@ -4,7 +4,7 @@ import IndexPage from "./pages/Index";
 import CadastroPage from "./pages/Cadastro";
 import CadastroMeiPage from "./pages/CadastroMei";
 import CadastroServicosPage from "./pages/CadastroServicos";
-import ViewAnuncioPage from "./pages/ViewAnuncio";
+import ViewAnuncioPage from "./pages/view-anuncio/ViewAnuncio";
 
 export interface RouterProps {
   children?: React.ReactNode;
