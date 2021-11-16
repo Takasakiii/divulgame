@@ -1,4 +1,4 @@
-import "./ListCard.css";
+import style from "./ListCard.module.css";
 
 export interface ListCardsComponentProps {
   children?: React.ReactNode;
@@ -6,8 +6,8 @@ export interface ListCardsComponentProps {
 
 function ListCardsComponent(props: ListCardsComponentProps) {
   return (
-    <div className="list-card-component">
-      <div className="list">{props.children}</div>
+    <div className={style.listCardComponent}>
+      <div className={style.list}>{props.children}</div>
     </div>
   );
 }

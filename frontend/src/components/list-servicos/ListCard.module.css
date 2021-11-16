@@ -1,28 +1,28 @@
-.list-card-component {
+.listCardComponent {
   display: flex;
   justify-content: center;
 }
 
-.list-card-component .list {
+.list {
   width: 1728px;
   display: flex;
   flex-wrap: wrap;
 }
 
 @media (max-width: 1727px) {
-  .list-card-component .list {
+  .list {
     width: 1296px;
   }
 }
 
 @media (max-width: 1295px) {
-  .list-card-component .list {
+  .list {
     width: 864px;
   }
 }
 
 @media (max-width: 863px) {
-  .list-card-component .list {
+  .list {
     width: 432px;
   }
 }
