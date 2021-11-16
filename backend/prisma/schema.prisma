@@ -8,14 +8,15 @@ datasource db {
 }
 
 model Usuario {
-  id         Int     @id @default(autoincrement())
-  nome       String  @db.VarChar(255)
-  nomeSocial String? @db.VarChar(255)
-  email      String  @unique @db.VarChar(255)
-  username   String  @unique @db.VarChar(255)
-  password   String  @db.VarChar(255)
-  meiId      Int?    @unique
-  mei        Mei?    @relation(fields: [meiId], references: [id])
+  id          Int         @id @default(autoincrement())
+  nome        String      @db.VarChar(255)
+  nomeSocial  String?     @db.VarChar(255)
+  email       String      @unique @db.VarChar(255)
+  username    String      @unique @db.VarChar(255)
+  password    String      @db.VarChar(255)
+  meiId       Int?        @unique
+  mei         Mei?        @relation(fields: [meiId], references: [id])
+  comentarios Avaliacao[]
 }
 
 model Mei {
@@ -35,12 +36,23 @@ model Anuncio {
   meiId       Int
   mei         Mei             @relation(fields: [meiId], references: [id])
   fotos       FotosAnuncios[]
+  comentarios Avaliacao[]
 }
 
 model FotosAnuncios {
   id        Int     @id @default(autoincrement())
   path      String  @unique @db.VarChar(255)
   mimeType  String  @db.VarChar(255)
+  anuncioId Int     @db.Int
+  anuncio   Anuncio @relation(fields: [anuncioId], references: [id])
+}
+
+model Avaliacao {
+  id        Int     @id @default(autoincrement())
+  nota      Int     @db.Int
+  cometario String  @db.VarChar(255)
+  autorId   Int     @db.Int
+  autor     Usuario @relation(fields: [autorId], references: [id])
   anuncioId Int     @db.Int
   anuncio   Anuncio @relation(fields: [anuncioId], references: [id])
 }
