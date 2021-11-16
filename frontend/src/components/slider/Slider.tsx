@@ -5,6 +5,8 @@ import "@splidejs/splide/dist/css/themes/splide-default.min.css";
 export interface SliderComponentProps {
   images: string[];
   className?: string;
+  width?: string | number;
+  height?: string | number;
 }
 
 function SliderComponents(props: SliderComponentProps) {
@@ -29,8 +31,8 @@ function SliderComponents(props: SliderComponentProps) {
           gap: "1rem",
           pagination: false,
           arrows: false,
-          width: "100%",
-          height: "700px",
+          width: props.width,
+          height: props.height,
           cover: true,
         }}
       >

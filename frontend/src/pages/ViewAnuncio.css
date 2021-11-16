@@ -1,0 +1,22 @@
+.view-anuncio-page .no-image {
+  height: calc((2 * 100vh) / 3);
+}
+
+@media (max-width: 1145px) {
+  .view-anuncio-page .slider {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .view-anuncio-page .info {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .view-anuncio-page .info p {
+    text-align: center;
+  }
+}

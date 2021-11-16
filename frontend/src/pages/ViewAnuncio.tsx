@@ -1,17 +1,34 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AnuncioOne, api, fotoUrl } from "../api/api";
+import { AnuncioOne, api, fotoUrl, tipoAnuncioToString } from "../api/api";
 import { AxiosError } from "axios";
+import { useScreenSize } from "../helpers/hooks";
 
-import CenterTagComponent from "../components/CenterTag";
 import SliderComponent from "../components/slider/Slider";
+
+import CrossSvg from "../assets/svgs/iconmonstr-x-mark-4.svg";
+
+import "./ViewAnuncio.css";
 
 function ViewAnuncioPage() {
   const idAnuncio = useParams().id;
+  const windowSize = useScreenSize();
 
   const [anuncio, setAnuncio] = useState<AnuncioOne | null>(null);
   const [error, setError] = useState<AxiosError | null>(null);
   const [images, setImages] = useState<string[]>([]);
+
+  const [wSliderStyle, setWSliderStyle] = useState<string | number>(
+    "calc(100vw / 2)"
+  );
+
+  useEffect(() => {
+    if (windowSize && windowSize.width <= 1145) {
+      setWSliderStyle("100%");
+    } else {
+      setWSliderStyle("calc(100vw / 2)");
+    }
+  }, [windowSize]);
 
   useEffect(() => {
     if (!idAnuncio) {
@@ -30,21 +47,52 @@ function ViewAnuncioPage() {
       });
   }, [idAnuncio]);
 
+  if (error) {
+    return <div>{error.response?.data.error}</div>;
+  }
+
+  if (!anuncio) {
+    return <div>Carregando...</div>;
+  }
+
   return (
-    <div>
-      {error ? (
-        <div>{error.response?.data.error}</div>
-      ) : (
-        <div>
-          <CenterTagComponent>
-            <h1 className="text-5xl m-4">{anuncio?.titulo}</h1>
-            {images.length > 0 && (
-              <SliderComponent images={images} className="mb-4" />
-            )}
-            <p>{anuncio?.descricao}</p>
-          </CenterTagComponent>
+    <div className="flex view-anuncio-page">
+      <div className="flex justify-between w-full p-6 flex-wrap">
+        <div className="w-1/2 slider">
+          {images.length > 0 ? (
+            <SliderComponent
+              images={images}
+              className="mb-4"
+              width={wSliderStyle}
+              height="calc((2 * 100vh) / 3)"
+            />
+          ) : (
+            <div className="flex justify-center items-center no-image border-solid border-2 border-gray-300 rounded-md mr-4 slider">
+              <div className="flex flex-col items-center">
+                <img
+                  src={CrossSvg}
+                  alt="x"
+                  width="100"
+                  height="100"
+                  className="mb-2"
+                />
+                <h2 className="text-3xl">Sem Imagens</h2>
+              </div>
+            </div>
+          )}
         </div>
-      )}
+        <div className="w-1/2 info">
+          <div className="flex w-full justify-center items-center">
+            <h1 className="text-4xl text-center mb-4 mr-4">
+              {anuncio?.titulo}
+            </h1>
+            <span className="border-solid border-2 border-gray-300 rounded-3xl p-2">
+              {tipoAnuncioToString(anuncio!.tipo)}
+            </span>
+          </div>
+          <p className="text-justify">{anuncio?.descricao}</p>
+        </div>
+      </div>
     </div>
   );
 }

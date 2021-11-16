@@ -86,3 +86,12 @@ export const api = axios.create({
 export function fotoUrl(id: number): string {
   return `${baseURL}/images/${id}`;
 }
+
+export function tipoAnuncioToString(tipo: TipoAnuncio): string {
+  switch (tipo) {
+    case TipoAnuncio.Produto:
+      return "Produto";
+    case TipoAnuncio.Servico:
+      return "Serviço";
+  }
+}
