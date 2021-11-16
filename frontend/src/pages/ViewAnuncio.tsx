@@ -5,10 +5,11 @@ import { AxiosError } from "axios";
 import { useScreenSize } from "../helpers/hooks";
 
 import SliderComponent from "../components/slider/Slider";
+import ComentariosComponent from "../components/Comentarios";
 
 import CrossSvg from "../assets/svgs/iconmonstr-x-mark-4.svg";
 
-import "./ViewAnuncio.css";
+import style from "./ViewAnuncio.module.css";
 
 function ViewAnuncioPage() {
   const idAnuncio = useParams().id;
@@ -56,9 +57,9 @@ function ViewAnuncioPage() {
   }
 
   return (
-    <div className="flex view-anuncio-page">
-      <div className="flex justify-between w-full p-6 flex-wrap">
-        <div className="w-1/2 slider">
+    <div className="flex flex-col p-6">
+      <div className="flex justify-between w-full flex-wrap">
+        <div className={`w-1/2 ${style.slider}`}>
           {images.length > 0 ? (
             <SliderComponent
               images={images}
@@ -67,7 +68,9 @@ function ViewAnuncioPage() {
               height="calc((2 * 100vh) / 3)"
             />
           ) : (
-            <div className="flex justify-center items-center no-image border-solid border-2 border-gray-300 rounded-md mr-4 slider">
+            <div
+              className={`flex justify-center items-center ${style.noImage} border-solid border-2 border-gray-300 rounded-md mr-4 ${style.slider}`}
+            >
               <div className="flex flex-col items-center">
                 <img
                   src={CrossSvg}
@@ -81,7 +84,7 @@ function ViewAnuncioPage() {
             </div>
           )}
         </div>
-        <div className="w-1/2 info">
+        <div className={`w-1/2 ${style.info}`}>
           <div className="flex w-full justify-center items-center">
             <h1 className="text-4xl text-center mb-4 mr-4">
               {anuncio?.titulo}
@@ -93,6 +96,7 @@ function ViewAnuncioPage() {
           <p className="text-justify">{anuncio?.descricao}</p>
         </div>
       </div>
+      <ComentariosComponent />
     </div>
   );
 }
