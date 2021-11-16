@@ -11,6 +11,7 @@ import {
 } from "../../database";
 import multer from "multer";
 import FotosAnuncios, { FotosSavedInfo } from "../../database/fotosAnuncios";
+import Avaliacao, { AvaliacaoDto } from "../../database/avaliacao";
 
 const anuncioRouter: Controller = (db) => {
   const router = Router();
@@ -121,6 +122,34 @@ const anuncioRouter: Controller = (db) => {
         .json({ error: "Internal server error" } as ErrorReponse);
     }
   });
+
+  router.post(
+    "/:anuncio/avaliacoes",
+    autorizationMiddleware,
+    async (req, res) => {
+      try {
+        const idAnuncio = parseInt(req.params.anuncio);
+        const { id: loggedUserId } = res.locals.user as JwtPayload;
+        const avaliacao = new AvaliacaoDto(req.body);
+        const avaliacaoDatabase = new Avaliacao(db);
+        const result = await avaliacaoDatabase.create(
+          loggedUserId,
+          idAnuncio,
+          avaliacao
+        );
+        return res.status(201).json(result);
+      } catch (err) {
+        if (err instanceof InvalidArgsError) {
+          return res.status(400).json({ error: err.message } as ErrorReponse);
+        }
+
+        console.error(err);
+        return res
+          .status(500)
+          .json({ error: "Internal server error" } as ErrorReponse);
+      }
+    }
+  );
 
   return {
     url: "/api/anuncios",
