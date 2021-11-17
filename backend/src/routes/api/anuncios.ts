@@ -88,9 +88,9 @@ const anuncioRouter: Controller = (db) => {
     try {
       const searchParams = req.query.search;
       const anuncio = new Anuncio(db);
-      if (!searchParams) {
-        const result = await anuncio.findAll();
-        return res.status(200).json(result);
+      if (searchParams) {
+        const searchResult = await anuncio.find(searchParams.toString());
+        return res.status(200).json(searchResult);
       }
 
       const authorSearchParams = req.query.author;
@@ -100,8 +100,8 @@ const anuncioRouter: Controller = (db) => {
         return res.status(200).json(result);
       }
 
-      const searchResult = await anuncio.find(searchParams.toString());
-      return res.status(200).json(searchResult);
+      const result = await anuncio.findAll();
+      return res.status(200).json(result);
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Internal server error" } as ErrorReponse);
