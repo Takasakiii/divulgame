@@ -36,6 +36,7 @@ function StarRatingComponent(props: StarRatingComponentProps) {
         className={classNames({
           [style.starActivate]: props.value >= 1,
           [style.starHover]: starRatting >= 1,
+          [style.star]: true,
         })}
         onMouseEnter={() => handleStarHover(1)}
         onClick={() => handleStarClick(1)}
@@ -46,6 +47,7 @@ function StarRatingComponent(props: StarRatingComponentProps) {
         className={classNames({
           [style.starActivate]: props.value >= 2,
           [style.starHover]: starRatting >= 2,
+          [style.star]: true,
         })}
         onMouseEnter={() => handleStarHover(2)}
         onClick={() => handleStarClick(2)}
@@ -56,6 +58,7 @@ function StarRatingComponent(props: StarRatingComponentProps) {
         className={classNames({
           [style.starActivate]: props.value >= 3,
           [style.starHover]: starRatting >= 3,
+          [style.star]: true,
         })}
         onMouseEnter={() => handleStarHover(3)}
         onClick={() => handleStarClick(3)}
@@ -66,6 +69,7 @@ function StarRatingComponent(props: StarRatingComponentProps) {
         className={classNames({
           [style.starActivate]: props.value >= 4,
           [style.starHover]: starRatting >= 4,
+          [style.star]: true,
         })}
         onMouseEnter={() => handleStarHover(4)}
         onClick={() => handleStarClick(4)}
@@ -76,6 +80,7 @@ function StarRatingComponent(props: StarRatingComponentProps) {
         className={classNames({
           [style.starActivate]: props.value === 5,
           [style.starHover]: starRatting === 5,
+          [style.star]: true,
         })}
         onMouseEnter={() => handleStarHover(5)}
         onClick={() => handleStarClick(5)}

@@ -7,3 +7,7 @@
   filter: invert(77%) sepia(52%) saturate(385%) hue-rotate(358deg)
     brightness(109%) contrast(102%);
 }
+
+.star {
+  cursor: pointer;
+}
