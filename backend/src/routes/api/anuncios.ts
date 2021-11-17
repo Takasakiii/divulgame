@@ -151,7 +151,7 @@ const anuncioRouter: Controller = (db) => {
     }
   );
 
-  router.get(":anuncio/avaliacoes", async (req, res) => {
+  router.get("/:anuncio/avaliacoes", async (req, res) => {
     try {
       const idAnuncio = parseInt(req.params.anuncio);
       const avaliacao = new Avaliacao(db);
