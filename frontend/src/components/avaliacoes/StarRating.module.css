@@ -2,3 +2,8 @@
   filter: invert(68%) sepia(38%) saturate(1663%) hue-rotate(360deg)
     brightness(103%) contrast(104%);
 }
+
+.starHover {
+  filter: invert(77%) sepia(52%) saturate(385%) hue-rotate(358deg)
+    brightness(109%) contrast(102%);
+}

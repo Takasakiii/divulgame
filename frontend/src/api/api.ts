@@ -87,6 +87,11 @@ export function fotoUrl(id: number): string {
   return `${baseURL}/images/${id}`;
 }
 
+export interface AvaliacaoDto {
+  nota: number;
+  comentario: string;
+}
+
 export function tipoAnuncioToString(tipo: TipoAnuncio): string {
   switch (tipo) {
     case TipoAnuncio.Produto:

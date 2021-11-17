@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 import { useScreenSize } from "../../helpers/hooks";
 
 import SliderComponent from "../../components/slider/Slider";
-import ComentariosComponent from "../../components/Comentarios";
+import ComentariosComponent from "../../components/avaliacoes/Comentarios";
 
 import CrossSvg from "../../assets/svgs/iconmonstr-x-mark-4.svg";
 
@@ -57,7 +57,7 @@ function ViewAnuncioPage() {
   }
 
   return (
-    <div className="flex flex-col p-6">
+    <div className="flex flex-col p-6 items-center">
       <div className="flex justify-between w-full flex-wrap">
         <div className={`w-1/2 ${style.slider}`}>
           {images.length > 0 ? (
@@ -96,7 +96,7 @@ function ViewAnuncioPage() {
           <p className="text-justify">{anuncio?.descricao}</p>
         </div>
       </div>
-      <ComentariosComponent />
+      <ComentariosComponent anuncio={anuncio} />
     </div>
   );
 }
