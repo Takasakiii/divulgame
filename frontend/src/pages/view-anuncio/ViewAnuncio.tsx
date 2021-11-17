@@ -6,6 +6,7 @@ import { useScreenSize } from "../../helpers/hooks";
 
 import SliderComponent from "../../components/slider/Slider";
 import ComentariosComponent from "../../components/avaliacoes/Comentarios";
+import CenterTagComponent from "../../components/CenterTag";
 
 import CrossSvg from "../../assets/svgs/iconmonstr-x-mark-4.svg";
 
@@ -89,11 +90,18 @@ function ViewAnuncioPage() {
             <h1 className="text-4xl text-center mb-4 mr-4">
               {anuncio?.titulo}
             </h1>
-            <span className="border-solid border-2 border-gray-300 rounded-3xl p-2">
+          </div>
+          <p className="text-justify bg-white p-4 rounded-md mb-2">
+            {anuncio?.descricao}
+          </p>
+          <CenterTagComponent className="mb-2">
+            <span className="border-solid border-2 border-gray-300 rounded-3xl p-2 font-bold text-xl">
               {tipoAnuncioToString(anuncio!.tipo)}
             </span>
-          </div>
-          <p className="text-justify">{anuncio?.descricao}</p>
+          </CenterTagComponent>
+          <span className="text-center block">
+            Anunciado por: {anuncio!.user.nomeFantasia}
+          </span>
         </div>
       </div>
       <ComentariosComponent anuncio={anuncio} />
