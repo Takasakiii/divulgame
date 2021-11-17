@@ -48,14 +48,24 @@ function LoginButtonComponent() {
               Atualizar Para Mei
             </LinkFormComponent>
           ) : (
-            <LinkFormComponent
-              type="link"
-              onClick={handleMenuOpened}
-              to="anuncios/adicionar"
-              className="mb-2"
-            >
-              Adicionar Serviço / Produto
-            </LinkFormComponent>
+            <>
+              <LinkFormComponent
+                type="link"
+                onClick={handleMenuOpened}
+                to="anuncios/adicionar"
+                className="mb-2"
+              >
+                Adicionar Serviço / Produto
+              </LinkFormComponent>
+              <LinkFormComponent
+                className="mb-2"
+                onClick={handleMenuOpened}
+                type="link"
+                to="anuncios/@me"
+              >
+                Meus Anuncios
+              </LinkFormComponent>
+            </>
           )}
           <LinkFormComponent type="button" onClick={handleLogout}>
             Deslogar
