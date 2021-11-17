@@ -8,12 +8,14 @@ export interface StarRatingComponentProps {
   onStarClick?: (starIndex: number) => void;
   className?: string;
   value: number;
+  disabled?: boolean;
 }
 
 function StarRatingComponent(props: StarRatingComponentProps) {
   const [starRatting, setStarRatting] = useState(0);
 
   function handleStarHover(starIndex: number) {
+    if (props.disabled) return;
     setStarRatting(starIndex);
   }
 
@@ -30,61 +32,24 @@ function StarRatingComponent(props: StarRatingComponentProps) {
       className={`flex ${style.starMenu} ${props.className}`}
       onMouseLeave={handleMouseExit}
     >
-      <img
-        src={StarSvg}
-        alt="Star 1"
-        className={classNames({
-          [style.starActivate]: props.value >= 1,
-          [style.starHover]: starRatting >= 1,
-          [style.star]: true,
-        })}
-        onMouseEnter={() => handleStarHover(1)}
-        onClick={() => handleStarClick(1)}
-      />
-      <img
-        src={StarSvg}
-        alt="Star 2"
-        className={classNames({
-          [style.starActivate]: props.value >= 2,
-          [style.starHover]: starRatting >= 2,
-          [style.star]: true,
-        })}
-        onMouseEnter={() => handleStarHover(2)}
-        onClick={() => handleStarClick(2)}
-      />
-      <img
-        src={StarSvg}
-        alt="Star 3"
-        className={classNames({
-          [style.starActivate]: props.value >= 3,
-          [style.starHover]: starRatting >= 3,
-          [style.star]: true,
-        })}
-        onMouseEnter={() => handleStarHover(3)}
-        onClick={() => handleStarClick(3)}
-      />
-      <img
-        src={StarSvg}
-        alt="Star 4"
-        className={classNames({
-          [style.starActivate]: props.value >= 4,
-          [style.starHover]: starRatting >= 4,
-          [style.star]: true,
-        })}
-        onMouseEnter={() => handleStarHover(4)}
-        onClick={() => handleStarClick(4)}
-      />
-      <img
-        src={StarSvg}
-        alt="Star 5"
-        className={classNames({
-          [style.starActivate]: props.value === 5,
-          [style.starHover]: starRatting === 5,
-          [style.star]: true,
-        })}
-        onMouseEnter={() => handleStarHover(5)}
-        onClick={() => handleStarClick(5)}
-      />
+      {[...Array(5)].map((_, index) => {
+        const starIndex = index + 1;
+
+        return (
+          <img
+            key={index}
+            src={StarSvg}
+            alt={`Star ${starIndex}`}
+            className={classNames({
+              [style.starActivate]: props.value >= starIndex,
+              [style.starHover]: starRatting >= starIndex,
+              [style.star]: !props.disabled,
+            })}
+            onMouseEnter={() => handleStarHover(starIndex)}
+            onClick={() => handleStarClick(starIndex)}
+          />
+        );
+      })}
     </div>
   );
 }
