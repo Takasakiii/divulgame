@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import classNames from "classnames";
 
 import StarSvg from "../../assets/svgs/iconmonstr-star-3.svg";
@@ -7,18 +7,11 @@ import style from "./StarRating.module.css";
 export interface StarRatingComponentProps {
   onStarClick?: (starIndex: number) => void;
   className?: string;
-  value?: number;
+  value: number;
 }
 
 function StarRatingComponent(props: StarRatingComponentProps) {
   const [starRatting, setStarRatting] = useState(0);
-  const [starRattingClicked, setStarRattingClicked] = useState(
-    props.value || 0
-  );
-
-  useEffect(() => {
-    setStarRattingClicked(props.value || 0);
-  }, [props.value]);
 
   function handleStarHover(starIndex: number) {
     setStarRatting(starIndex);
@@ -29,7 +22,6 @@ function StarRatingComponent(props: StarRatingComponentProps) {
   }
 
   function handleStarClick(starIndex: number) {
-    setStarRattingClicked(starIndex);
     props.onStarClick && props.onStarClick(starIndex);
   }
 
@@ -42,7 +34,7 @@ function StarRatingComponent(props: StarRatingComponentProps) {
         src={StarSvg}
         alt="Star 1"
         className={classNames({
-          [style.starActivate]: starRattingClicked >= 1,
+          [style.starActivate]: props.value >= 1,
           [style.starHover]: starRatting >= 1,
         })}
         onMouseEnter={() => handleStarHover(1)}
@@ -52,7 +44,7 @@ function StarRatingComponent(props: StarRatingComponentProps) {
         src={StarSvg}
         alt="Star 2"
         className={classNames({
-          [style.starActivate]: starRattingClicked >= 2,
+          [style.starActivate]: props.value >= 2,
           [style.starHover]: starRatting >= 2,
         })}
         onMouseEnter={() => handleStarHover(2)}
@@ -62,7 +54,7 @@ function StarRatingComponent(props: StarRatingComponentProps) {
         src={StarSvg}
         alt="Star 3"
         className={classNames({
-          [style.starActivate]: starRattingClicked >= 3,
+          [style.starActivate]: props.value >= 3,
           [style.starHover]: starRatting >= 3,
         })}
         onMouseEnter={() => handleStarHover(3)}
@@ -72,7 +64,7 @@ function StarRatingComponent(props: StarRatingComponentProps) {
         src={StarSvg}
         alt="Star 4"
         className={classNames({
-          [style.starActivate]: starRattingClicked >= 4,
+          [style.starActivate]: props.value >= 4,
           [style.starHover]: starRatting >= 4,
         })}
         onMouseEnter={() => handleStarHover(4)}
@@ -82,7 +74,7 @@ function StarRatingComponent(props: StarRatingComponentProps) {
         src={StarSvg}
         alt="Star 5"
         className={classNames({
-          [style.starActivate]: starRattingClicked === 5,
+          [style.starActivate]: props.value === 5,
           [style.starHover]: starRatting === 5,
         })}
         onMouseEnter={() => handleStarHover(5)}
