@@ -58,7 +58,7 @@ function ViewAnuncioPage() {
 
   return (
     <div className="flex flex-col p-6 items-center">
-      <div className="flex justify-between w-full flex-wrap">
+      <div className="flex justify-between w-full flex-wrap mb-4">
         <div className={`w-1/2 ${style.slider}`}>
           {images.length > 0 ? (
             <SliderComponent
