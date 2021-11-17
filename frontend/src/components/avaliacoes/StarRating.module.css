@@ -1,0 +1,4 @@
+.starActivate {
+  filter: invert(68%) sepia(38%) saturate(1663%) hue-rotate(360deg)
+    brightness(103%) contrast(104%);
+}
