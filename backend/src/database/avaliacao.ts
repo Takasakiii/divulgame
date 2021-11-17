@@ -22,6 +22,13 @@ export class AvaliacaoDto {
   }
 }
 
+export interface AvaliacaoView {
+  id: number;
+  nota: number;
+  comentario: string;
+  username: string;
+}
+
 class Avaliacao {
   private prisma: PrismaClient;
 
@@ -40,6 +47,22 @@ class Avaliacao {
     });
 
     return avaliacaoCriada;
+  }
+
+  async get(anuncioId: number): Promise<AvaliacaoView[]> {
+    const avaliacoes = await this.prisma.avaliacao.findMany({
+      where: { anuncioId },
+      include: { autor: true },
+    });
+
+    return avaliacoes.map((avaliacao) => {
+      return {
+        id: avaliacao.id,
+        nota: avaliacao.nota,
+        comentario: avaliacao.cometario,
+        username: avaliacao.autor.username,
+      };
+    });
   }
 }
 

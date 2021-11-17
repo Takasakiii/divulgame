@@ -151,6 +151,20 @@ const anuncioRouter: Controller = (db) => {
     }
   );
 
+  router.get(":anuncio/avaliacoes", async (req, res) => {
+    try {
+      const idAnuncio = parseInt(req.params.anuncio);
+      const avaliacao = new Avaliacao(db);
+      const result = await avaliacao.get(idAnuncio);
+      return res.status(200).json(result);
+    } catch (err) {
+      console.error(err);
+      return res
+        .status(500)
+        .json({ error: "Internal server error" } as ErrorReponse);
+    }
+  });
+
   return {
     url: "/api/anuncios",
     router,
