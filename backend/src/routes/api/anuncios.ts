@@ -93,6 +93,13 @@ const anuncioRouter: Controller = (db) => {
         return res.status(200).json(result);
       }
 
+      const authorSearchParams = req.query.author;
+      if (authorSearchParams) {
+        const authorId = parseInt(authorSearchParams.toString());
+        const result = await anuncio.findByUser(authorId);
+        return res.status(200).json(result);
+      }
+
       const searchResult = await anuncio.find(searchParams.toString());
       return res.status(200).json(searchResult);
     } catch (err) {

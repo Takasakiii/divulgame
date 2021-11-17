@@ -196,6 +196,44 @@ class Anuncio {
       },
     };
   }
+
+  async findByUser(userId: number): Promise<AnuncioForMany[]> {
+    const anuncios = await this.prisma.anuncio.findMany({
+      where: {
+        mei: {
+          usuario: {
+            id: userId,
+          },
+        },
+      },
+      include: {
+        mei: {
+          include: { usuario: true },
+        },
+        fotos: true,
+      },
+    });
+
+    const result: AnuncioForMany[] = anuncios.map((anuncio) => {
+      if (!anuncio.mei) throw new InconstantDataError("Anúncio sem MEI");
+      if (!anuncio.mei.usuario)
+        throw new InconstantDataError("Anúncio sem Usuário");
+
+      return {
+        id: anuncio.id,
+        titulo: anuncio.titulo,
+        descricao: anuncio.descricao,
+        tipo: anuncio.tipoAnuncio,
+        user: {
+          id: anuncio.mei.usuario.id,
+          nomeFantasia: anuncio.mei.nomeFantasia,
+        },
+        icone: anuncio.fotos.length > 0 ? anuncio.fotos[0].id : null,
+      };
+    });
+
+    return result;
+  }
 }
 
 export default Anuncio;
