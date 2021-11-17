@@ -100,3 +100,10 @@ export function tipoAnuncioToString(tipo: TipoAnuncio): string {
       return "Serviço";
   }
 }
+
+export interface AvaliacaoView {
+  id: number;
+  nota: number;
+  comentario: string;
+  username: string;
+}
