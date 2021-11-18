@@ -3,10 +3,13 @@ import { useParams } from "react-router-dom";
 import { AnuncioOne, api, fotoUrl, tipoAnuncioToString } from "../../api/api";
 import { AxiosError } from "axios";
 import { useScreenSize } from "../../helpers/hooks";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 import SliderComponent from "../../components/slider/Slider";
 import ComentariosComponent from "../../components/avaliacoes/Comentarios";
 import CenterTagComponent from "../../components/CenterTag";
+import AdminBarComponent from "../../components/AdminBar";
 
 import CrossSvg from "../../assets/svgs/iconmonstr-x-mark-4.svg";
 
@@ -15,6 +18,7 @@ import style from "./ViewAnuncio.module.css";
 function ViewAnuncioPage() {
   const idAnuncio = useParams().id;
   const windowSize = useScreenSize();
+  const loggedData = useSelector((state: RootState) => state.login);
 
   const [anuncio, setAnuncio] = useState<AnuncioOne | null>(null);
   const [error, setError] = useState<AxiosError | null>(null);
@@ -59,7 +63,7 @@ function ViewAnuncioPage() {
 
   return (
     <div className="flex flex-col p-6 items-center">
-      <div className="flex justify-between w-full flex-wrap mb-4">
+      <div className="flex justify-between w-full flex-wrap mb-8">
         <div className={`w-1/2 ${style.slider}`}>
           {images.length > 0 ? (
             <SliderComponent
@@ -94,14 +98,15 @@ function ViewAnuncioPage() {
           <p className="text-justify bg-white p-4 rounded-md mb-2">
             {anuncio?.descricao}
           </p>
-          <CenterTagComponent className="mb-2">
-            <span className="border-solid border-2 border-gray-300 rounded-3xl p-2 font-bold text-xl">
+          <CenterTagComponent>
+            <span className="border-solid border-2 border-gray-300 rounded-3xl p-2 font-bold text-xl mb-2">
               {tipoAnuncioToString(anuncio!.tipo)}
             </span>
+            <span className="text-center block mb-4">
+              Anunciado por: {anuncio!.user.nomeFantasia}
+            </span>
+            {loggedData?.user.id === anuncio.user.id && <AdminBarComponent />}
           </CenterTagComponent>
-          <span className="text-center block">
-            Anunciado por: {anuncio!.user.nomeFantasia}
-          </span>
         </div>
       </div>
       <ComentariosComponent anuncio={anuncio} />
