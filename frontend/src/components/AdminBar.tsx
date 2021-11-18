@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import classNames from "classnames";
 
 import TrashSvg from "../assets/svgs/iconmonstr-trash-can-27.svg";
-import PencilSvg from "../assets/svgs/iconmonstr-pencil-7.svg";
+// import PencilSvg from "../assets/svgs/iconmonstr-pencil-7.svg";
 
 export interface AdminBarComponentProps {
   className?: string;
@@ -29,7 +29,7 @@ function AdminBarComponent(props: AdminBarComponentProps) {
 
   return (
     <div className={`bg-white flex p-4 rounded-md ${props.className}`}>
-      <button type="button" className="mr-4 flex" onClick={handleDelete}>
+      <button type="button" className="flex" onClick={handleDelete}>
         <img
           src={TrashSvg}
           style={confirmDelete ? confirmIcon : undefined}
@@ -46,10 +46,10 @@ function AdminBarComponent(props: AdminBarComponentProps) {
             : "Deletar Anuncio"}
         </span>
       </button>
-      <button type="button" className="flex" onClick={props.onEdit}>
+      {/* <button type="button" className="flex" onClick={props.onEdit}>
         <img src={PencilSvg} alt="Editar anuncio" className="mr-2" />
         <span>Editar Anuncio</span>
-      </button>
+      </button> */}
     </div>
   );
 }
