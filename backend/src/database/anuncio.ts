@@ -5,6 +5,8 @@ import {
   NotFoundError,
   UnauthorizedError,
 } from ".";
+import fs from "fs/promises";
+import path from "path";
 
 export enum TipoAnuncio {
   Produto,
@@ -251,12 +253,40 @@ class Anuncio {
             usuario: true,
           },
         },
+        fotos: true,
+        comentarios: true,
       },
     });
 
     if (!anuncio) throw new NotFoundError("Anúncio não encontrado");
     if (anuncio.mei.usuario?.id !== authorId)
       throw new UnauthorizedError("Usuário não autorizado");
+
+    if (anuncio.comentarios.length > 0) {
+      await this.prisma.avaliacao.deleteMany({
+        where: {
+          anuncioId: id,
+        },
+      });
+    }
+
+    if (anuncio.fotos.length > 0) {
+      const fotosFilesPromises = anuncio.fotos.map(
+        async ({ path: pathFoto }) => {
+          await fs.unlink(
+            path.join(__dirname, "..", "..", "uploads", pathFoto)
+          );
+        }
+      );
+
+      await Promise.all(fotosFilesPromises);
+
+      await this.prisma.fotosAnuncios.deleteMany({
+        where: {
+          anuncioId: id,
+        },
+      });
+    }
 
     await this.prisma.anuncio.delete({
       where: {

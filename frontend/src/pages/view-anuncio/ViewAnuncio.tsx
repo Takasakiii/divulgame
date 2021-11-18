@@ -5,6 +5,7 @@ import { AxiosError } from "axios";
 import { useScreenSize } from "../../helpers/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { useNavigate } from "react-router-dom";
 
 import SliderComponent from "../../components/slider/Slider";
 import ComentariosComponent from "../../components/avaliacoes/Comentarios";
@@ -19,6 +20,7 @@ function ViewAnuncioPage() {
   const idAnuncio = useParams().id;
   const windowSize = useScreenSize();
   const loggedData = useSelector((state: RootState) => state.login);
+  const navigate = useNavigate();
 
   const [anuncio, setAnuncio] = useState<AnuncioOne | null>(null);
   const [error, setError] = useState<AxiosError | null>(null);
@@ -52,6 +54,22 @@ function ViewAnuncioPage() {
         setError(err);
       });
   }, [idAnuncio]);
+
+  function handleOnDelete() {
+    if (!anuncio) return;
+    if (!loggedData) return;
+
+    api
+      .delete(`/anuncios/${anuncio.id}`, {
+        headers: {
+          Authorization: loggedData.token,
+        },
+      })
+      .then(() => {
+        navigate(-1);
+      })
+      .catch((err) => console.error(err));
+  }
 
   if (error) {
     return <div>{error.response?.data.error}</div>;
@@ -105,7 +123,9 @@ function ViewAnuncioPage() {
             <span className="text-center block mb-4">
               Anunciado por: {anuncio!.user.nomeFantasia}
             </span>
-            {loggedData?.user.id === anuncio.user.id && <AdminBarComponent />}
+            {loggedData?.user.id === anuncio.user.id && (
+              <AdminBarComponent onDelete={handleOnDelete} />
+            )}
           </CenterTagComponent>
         </div>
       </div>
