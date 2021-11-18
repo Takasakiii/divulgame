@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:2000";
+const baseURL = process.env.REACT_APP_API_LOCATION || "http://localhost:2000";
 
 export interface Login {
   usuario: string;
