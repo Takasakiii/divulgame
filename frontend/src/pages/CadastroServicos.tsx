@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 import { AnuncioDto, api, Anuncio } from "../api/api";
@@ -33,8 +33,13 @@ function CadastroServicosPage() {
   const [selectedTipoAnuncio, setSelectedTipoAnuncio] = useState(0);
   const [fotos, setFotos] = useState<File[]>([]);
 
+  useEffect(() => {
+    if (!loggedUser || !loggedUser.user.isMei) {
+      navigate("/");
+    }
+  }, [navigate, loggedUser]);
+
   if (loggedUser === null || !loggedUser.user.isMei) {
-    navigate("/");
     return <></>;
   }
 

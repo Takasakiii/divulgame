@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
@@ -29,8 +29,14 @@ function CadastroMeiPage() {
   const [nomeFantasia, setNomeFantasia] = useState("");
   const [razaoSocial, setRazaoSocial] = useState("");
 
+  useEffect(() => {
+    if (!loginData || loginData.user.isMei) {
+      navigate("/");
+      return;
+    }
+  }, [navigate, loginData]);
+
   if (!loginData || loginData.user.isMei) {
-    navigate("/");
     return <></>;
   }
 
