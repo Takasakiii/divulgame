@@ -12,7 +12,7 @@ export interface CardComponentProps {
 function CardComponent(props: CardComponentProps) {
   return (
     <div className={`bg-white m-4 rounded-md ${style.cardComponent}`}>
-      <Link to={`anuncios/${props.anuncio.id}`} className="flex p-4">
+      <Link to={`/anuncios/${props.anuncio.id}`} className="flex p-4">
         {props.anuncio.icone ? (
           <img
             src={fotoUrl(props.anuncio.icone)}
