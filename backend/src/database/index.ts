@@ -36,3 +36,10 @@ export class NotFoundError extends InvalidArgsError {
     this.name = "NotFoundError";
   }
 }
+
+export class UnauthorizedError extends InvalidArgsError {
+  constructor(message: string) {
+    super(message);
+    this.name = "UnauthorizedError";
+  }
+}

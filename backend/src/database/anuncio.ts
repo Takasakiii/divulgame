@@ -1,5 +1,10 @@
 import { PrismaClient, Anuncio as PrismaAnuncio } from "@prisma/client";
-import { InvalidArgsError, InconstantDataError, NotFoundError } from ".";
+import {
+  InvalidArgsError,
+  InconstantDataError,
+  NotFoundError,
+  UnauthorizedError,
+} from ".";
 
 export enum TipoAnuncio {
   Produto,
@@ -233,6 +238,31 @@ class Anuncio {
     });
 
     return result;
+  }
+
+  async remove(id: number, authorId: number) {
+    const anuncio = await this.prisma.anuncio.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        mei: {
+          include: {
+            usuario: true,
+          },
+        },
+      },
+    });
+
+    if (!anuncio) throw new NotFoundError("Anúncio não encontrado");
+    if (anuncio.mei.usuario?.id !== authorId)
+      throw new UnauthorizedError("Usuário não autorizado");
+
+    await this.prisma.anuncio.delete({
+      where: {
+        id,
+      },
+    });
   }
 }
 

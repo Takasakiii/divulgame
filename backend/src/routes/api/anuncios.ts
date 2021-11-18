@@ -172,6 +172,25 @@ const anuncioRouter: Controller = (db) => {
     }
   });
 
+  router.delete("/:anuncio", autorizationMiddleware, async (req, res) => {
+    try {
+      const idAnuncio = parseInt(req.params.anuncio);
+      const { id: loggedUserId } = res.locals.user as JwtPayload;
+      const anuncio = new Anuncio(db);
+      await anuncio.remove(idAnuncio, loggedUserId);
+      return res.status(200).json({ message: "Anuncio removido com sucesso" });
+    } catch (err) {
+      if (err instanceof InvalidArgsError) {
+        return res.status(400).json({ error: err.message } as ErrorReponse);
+      }
+
+      console.error(err);
+      return res
+        .status(500)
+        .json({ error: "Internal server error" } as ErrorReponse);
+    }
+  });
+
   return {
     url: "/api/anuncios",
     router,
