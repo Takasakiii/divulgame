@@ -41,7 +41,7 @@ function AtualizarAnuncioPage() {
     }
 
     api
-      .get<AnuncioOne>(`/anuncios/${params.id}}`)
+      .get<AnuncioOne>(`/anuncios/${params.id}`)
       .then((response) => {
         setLoading(false);
         setAnuncio(response.data);
