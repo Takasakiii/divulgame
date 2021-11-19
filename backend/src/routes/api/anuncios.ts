@@ -224,6 +224,36 @@ const anuncioRouter: Controller = (db) => {
     }
   );
 
+  router.put("/:anuncio", autorizationMiddleware, async (req, res) => {
+    try {
+      const idAnuncio = parseInt(req.params.anuncio);
+      const { id: LoggedUserId } = res.locals.user as JwtPayload;
+      const anuncio = new Anuncio(db);
+      const anuncioDto = new AnuncioDto(req.body);
+      await anuncio.updateAnuncio(idAnuncio, anuncioDto, LoggedUserId);
+      return res
+        .status(200)
+        .json({ message: "Anuncio atualizado com sucesso" });
+    } catch (err) {
+      if (err instanceof NotFoundError) {
+        return res.status(404).json({ error: err.message } as ErrorReponse);
+      }
+
+      if (err instanceof UnauthorizedError) {
+        return res.status(401).json({ error: err.message } as ErrorReponse);
+      }
+
+      if (err instanceof InvalidArgsError) {
+        return res.status(400).json({ error: err.message } as ErrorReponse);
+      }
+
+      console.error(err);
+      return res
+        .status(500)
+        .json({ error: "Internal server error" } as ErrorReponse);
+    }
+  });
+
   return {
     url: "/api/anuncios",
     router,
