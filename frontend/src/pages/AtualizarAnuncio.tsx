@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
-import { api, AnuncioOne } from "../api/api";
+import { api, AnuncioOne, AnuncioDto } from "../api/api";
 import { AxiosError } from "axios";
 
 import FormComponent from "../components/Form";
@@ -11,6 +11,7 @@ import CenterTagComponent from "../components/CenterTag";
 import InputTextComponent from "../components/InputText";
 import TextAreaComponent from "../components/TextArea";
 import SelectComponent from "../components/Select";
+import SimpleButtonComponent from "../components/SimpleButton";
 
 function AtualizarAnuncioPage() {
   const params = useParams();
@@ -18,6 +19,7 @@ function AtualizarAnuncioPage() {
   const loggedUserData = useSelector((state: RootState) => state.login);
 
   const [anuncio, setAnuncio] = useState<AnuncioOne | null>(null);
+  const [titulo, setTitulo] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -36,6 +38,7 @@ function AtualizarAnuncioPage() {
       .then((response) => {
         setLoading(false);
         setAnuncio(response.data);
+        setTitulo(response.data.titulo);
       })
       .catch((err: AxiosError) => {
         setLoading(false);
@@ -43,10 +46,22 @@ function AtualizarAnuncioPage() {
       });
   }, [params.id, navigate, loggedUserData]);
 
+  function onUpdateAnuncio() {
+    if (!anuncio) return;
+
+    const anuncioDto: AnuncioDto = {
+      descricao: anuncio.descricao,
+      titulo: anuncio.titulo,
+      tipoAnuncio: anuncio.tipo,
+    };
+
+    console.log(anuncioDto);
+  }
+
   if (loading) {
     return (
       <CenterTagComponent>
-        <FormComponent className="mt-8">Carregando...</FormComponent>
+        <FormComponent className="mt-10">Carregando...</FormComponent>
       </CenterTagComponent>
     );
   }
@@ -54,7 +69,7 @@ function AtualizarAnuncioPage() {
   if (!loading && !anuncio) {
     return (
       <CenterTagComponent>
-        <FormComponent className="mt-8">
+        <FormComponent className="mt-10">
           Problemas ao carregar os dados
         </FormComponent>
       </CenterTagComponent>
@@ -63,9 +78,20 @@ function AtualizarAnuncioPage() {
 
   return (
     <CenterTagComponent>
-      <FormComponent className="mt-8">
-        <InputTextComponent label="Titulo:" value={anuncio!.titulo} />
-        <TextAreaComponent label="Descrição:" value={anuncio!.descricao} />
+      <FormComponent className="mt-10" onSubmit={onUpdateAnuncio}>
+        <h1 className="text-3xl">
+          <b>Editar {titulo}</b>
+        </h1>
+        <InputTextComponent
+          label="Titulo:"
+          value={anuncio!.titulo}
+          onChange={(titulo) => setAnuncio({ ...anuncio!, titulo })}
+        />
+        <TextAreaComponent
+          label="Descrição:"
+          value={anuncio!.descricao}
+          onChange={(descricao) => setAnuncio({ ...anuncio!, descricao })}
+        />
         <SelectComponent
           label="Tipo:"
           options={[
@@ -73,7 +99,12 @@ function AtualizarAnuncioPage() {
             { value: 1, label: "Serviço" },
           ]}
           selectedItem={anuncio!.tipo}
+          className="mb-4"
+          onChange={(tipo) => setAnuncio({ ...anuncio!, tipo })}
         />
+        <CenterTagComponent>
+          <SimpleButtonComponent type="submit">Atualizar</SimpleButtonComponent>
+        </CenterTagComponent>
       </FormComponent>
     </CenterTagComponent>
   );
