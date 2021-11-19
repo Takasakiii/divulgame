@@ -13,6 +13,7 @@ import TextAreaComponent from "../components/TextArea";
 import SelectComponent from "../components/Select";
 import SimpleButtonComponent from "../components/SimpleButton";
 import ModalComponent from "../components/Modal";
+import AtualizarFotosButtonComponent from "../components/atualizar-fotos/AtualizarFotosButton";
 
 function AtualizarAnuncioPage() {
   const params = useParams();
@@ -142,6 +143,10 @@ function AtualizarAnuncioPage() {
           onChange={(tipo) => setAnuncio({ ...anuncio!, tipo })}
         />
         <CenterTagComponent>
+          <AtualizarFotosButtonComponent
+            className="mb-2"
+            fotos={anuncio!.fotos}
+          />
           <SimpleButtonComponent type="submit">Atualizar</SimpleButtonComponent>
         </CenterTagComponent>
       </FormComponent>

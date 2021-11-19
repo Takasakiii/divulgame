@@ -5,6 +5,7 @@ export interface ModalComponentProps {
   children: React.ReactNode;
   state: boolean;
   onClose?: (newState: boolean) => void;
+  className?: string;
 }
 
 function ModalComponent(props: ModalComponentProps) {
@@ -17,14 +18,14 @@ function ModalComponent(props: ModalComponentProps) {
   return (
     <div
       style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
-      className="fixed top-0 left-0 right-0 bottom-0 bg flex justify-center items-center"
+      className={`fixed top-0 left-0 right-0 bottom-0 bg flex justify-center items-center ${props.className}`}
     >
       <div className="bg-white p-4 border-2 border-gray-400 border-solid rounded-md text-black flex flex-col">
         <div className="mb-2 border-solid border-b-2 border-gray-100">
           {props.children}
         </div>
         <CenterTagComponent>
-          <SimpleButtonComponent onClick={handleClose}>
+          <SimpleButtonComponent type="button" onClick={handleClose}>
             Fechar
           </SimpleButtonComponent>
         </CenterTagComponent>
