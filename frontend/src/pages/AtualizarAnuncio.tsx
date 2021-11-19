@@ -146,6 +146,7 @@ function AtualizarAnuncioPage() {
           <AtualizarFotosButtonComponent
             className="mb-2"
             fotos={anuncio!.fotos}
+            anuncioId={anuncio!.id}
           />
           <SimpleButtonComponent type="submit">Atualizar</SimpleButtonComponent>
         </CenterTagComponent>
