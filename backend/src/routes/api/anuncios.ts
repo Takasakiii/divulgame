@@ -70,8 +70,12 @@ const anuncioRouter: Controller = (db) => {
           mimeType: foto.mimetype,
         }));
         const database = new FotosAnuncios(db);
-        await database.create(loggedUserId, idAnuncio, fotos);
-        res.status(201).json({ message: "Fotos enviadas com sucesso" });
+        const fotosGravadas = await database.create(
+          loggedUserId,
+          idAnuncio,
+          fotos
+        );
+        res.status(201).json(fotosGravadas);
       } catch (err) {
         if (err instanceof InvalidArgsError) {
           res.status(400).json({ error: err.message } as ErrorReponse);
