@@ -8,6 +8,7 @@ import PencilSvg from "../assets/svgs/iconmonstr-pencil-7.svg";
 export interface AdminBarComponentProps {
   className?: string;
   onDelete?: () => void;
+  id: number;
 }
 
 function AdminBarComponent(props: AdminBarComponentProps) {
@@ -46,7 +47,7 @@ function AdminBarComponent(props: AdminBarComponentProps) {
             : "Deletar Anuncio"}
         </span>
       </button>
-      <Link className="flex" to="/">
+      <Link className="flex" to={`/anuncios/${props.id}/editar`}>
         <img src={PencilSvg} alt="Editar anuncio" className="mr-2" />
         <span>Editar Anuncio</span>
       </Link>

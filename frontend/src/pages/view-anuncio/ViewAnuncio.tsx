@@ -124,7 +124,7 @@ function ViewAnuncioPage() {
               Anunciado por: {anuncio!.user.nomeFantasia}
             </span>
             {loggedData?.user.id === anuncio.user.id && (
-              <AdminBarComponent onDelete={handleOnDelete} />
+              <AdminBarComponent onDelete={handleOnDelete} id={anuncio.id} />
             )}
           </CenterTagComponent>
         </div>
