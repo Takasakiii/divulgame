@@ -12,6 +12,7 @@ import InputTextComponent from "../components/InputText";
 import TextAreaComponent from "../components/TextArea";
 import SelectComponent from "../components/Select";
 import SimpleButtonComponent from "../components/SimpleButton";
+import ModalComponent from "../components/Modal";
 
 function AtualizarAnuncioPage() {
   const params = useParams();
@@ -21,6 +22,12 @@ function AtualizarAnuncioPage() {
   const [anuncio, setAnuncio] = useState<AnuncioOne | null>(null);
   const [titulo, setTitulo] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const [modalState, setModalState] = useState({
+    opened: false,
+    message: "",
+    navigate: false,
+  });
 
   useEffect(() => {
     if (!params.id || isNaN(parseInt(params.id))) {
@@ -47,7 +54,7 @@ function AtualizarAnuncioPage() {
   }, [params.id, navigate, loggedUserData]);
 
   function onUpdateAnuncio() {
-    if (!anuncio) return;
+    if (!anuncio || !loggedUserData) return;
 
     const anuncioDto: AnuncioDto = {
       descricao: anuncio.descricao,
@@ -55,7 +62,39 @@ function AtualizarAnuncioPage() {
       tipoAnuncio: anuncio.tipo,
     };
 
-    console.log(anuncioDto);
+    api
+      .put(`/anuncios/${anuncio.id}`, anuncioDto, {
+        headers: {
+          Authorization: loggedUserData.token,
+        },
+      })
+      .then(() => {
+        setModalState({
+          opened: true,
+          message: "Anúncio atualizado com sucesso!",
+          navigate: true,
+        });
+      })
+      .catch((err: AxiosError) => {
+        setModalState({
+          opened: true,
+          message: err.response?.data.error,
+          navigate: false,
+        });
+      });
+  }
+
+  function onModalClose() {
+    if (modalState.navigate) {
+      navigate(-1);
+      return;
+    }
+
+    setModalState({
+      opened: false,
+      message: "",
+      navigate: false,
+    });
   }
 
   if (loading) {
@@ -106,6 +145,9 @@ function AtualizarAnuncioPage() {
           <SimpleButtonComponent type="submit">Atualizar</SimpleButtonComponent>
         </CenterTagComponent>
       </FormComponent>
+      <ModalComponent state={modalState.opened} onClose={onModalClose}>
+        {modalState.message}
+      </ModalComponent>
     </CenterTagComponent>
   );
 }
