@@ -41,6 +41,10 @@ function AtualizarFotosButtonComponent(
       });
   }
 
+  function onAddFoto(fotosAdd: number[]) {
+    setFotos([...fotos, ...fotosAdd]);
+  }
+
   return (
     <div>
       <button
@@ -62,7 +66,10 @@ function AtualizarFotosButtonComponent(
               onRemove={handleRemoveFoto}
             />
           ))}
-          <AddFotoButtonComponent anuncioId={props.anuncioId} />
+          <AddFotoButtonComponent
+            anuncioId={props.anuncioId}
+            onAdd={onAddFoto}
+          />
         </div>
       </ModalComponent>
     </div>

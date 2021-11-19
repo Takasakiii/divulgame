@@ -107,3 +107,7 @@ export interface AvaliacaoView {
   comentario: string;
   username: string;
 }
+
+export interface FotosAnunciosResponse {
+  id: number;
+}

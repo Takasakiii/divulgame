@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
-import { api } from "../../api/api";
+import { api, FotosAnunciosResponse } from "../../api/api";
 
 import CenterTagComponent from "../CenterTag";
 
@@ -25,18 +25,15 @@ function AddFotoButtonComponent(props: AddFotoButtonComponentProps) {
 
   async function onAddPictures(e: React.ChangeEvent<HTMLInputElement>) {
     if (!loggedUserData) return;
-    console.log(e.target.files);
-
     const files = e.target.files;
     if (files && files.length > 0) {
-      const filesArray: number[] = Array(files.length);
       const formData = new FormData();
       for (let i = 0; i < files.length; i++) {
         formData.append("fotos", files[i]);
       }
 
       try {
-        const response = await api.post(
+        const response = await api.post<FotosAnunciosResponse[]>(
           `/anuncios/${props.anuncioId}/fotos`,
           formData,
           {
@@ -47,9 +44,9 @@ function AddFotoButtonComponent(props: AddFotoButtonComponentProps) {
           }
         );
 
-        console.log(response.data);
+        props.onAdd?.(response.data.map((foto) => foto.id));
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     }
   }
