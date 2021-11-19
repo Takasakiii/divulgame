@@ -6,6 +6,7 @@ import { fotoUrl, api } from "../../api/api";
 
 import ModalComponent from "../Modal";
 import FotoButtonComponent from "./FotoButton";
+import AddFotoButtonComponent from "./AddFotoButton";
 
 import FotosSvg from "../../assets/svgs/iconmonstr-picture-7.svg";
 
@@ -61,6 +62,7 @@ function AtualizarFotosButtonComponent(
               onRemove={handleRemoveFoto}
             />
           ))}
+          <AddFotoButtonComponent anuncioId={props.anuncioId} />
         </div>
       </ModalComponent>
     </div>
