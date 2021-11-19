@@ -5,6 +5,7 @@ export interface InputTextComponentProps {
   type?: React.HTMLInputTypeAttribute;
   onChange?: (value: string) => void;
   className?: string;
+  value?: string;
 }
 
 function InputTextComponent(props: InputTextComponentProps) {
@@ -21,6 +22,7 @@ function InputTextComponent(props: InputTextComponentProps) {
         type={type}
         className="border-gray-200 border-solid border-2 p-1 rounded-md"
         onChange={handleChange}
+        value={props.value}
       />
     </div>
   );

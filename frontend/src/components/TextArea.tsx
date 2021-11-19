@@ -4,6 +4,7 @@ export interface TextAreaComponentProps {
   label: string;
   className?: string;
   onChange?: (value: string) => void;
+  value?: string;
 }
 
 function TextAreaComponent(props: TextAreaComponentProps) {
@@ -17,6 +18,7 @@ function TextAreaComponent(props: TextAreaComponentProps) {
       <textarea
         className="border-gray-200 border-solid border-2 p-1 rounded-md"
         onChange={handleOnChange}
+        value={props.value}
       />
     </div>
   );

@@ -294,6 +294,67 @@ class Anuncio {
       },
     });
   }
+
+  async removeFoto(idFoto: number, authorId: number) {
+    const foto = await this.prisma.fotosAnuncios.findFirst({
+      where: {
+        id: idFoto,
+      },
+      include: {
+        anuncio: {
+          include: {
+            mei: {
+              include: {
+                usuario: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!foto) throw new NotFoundError("Foto não encontrada");
+    if (foto.anuncio.mei.usuario?.id !== authorId)
+      throw new UnauthorizedError("Usuário não autorizado");
+
+    await fs.unlink(path.join(__dirname, "..", "..", "uploads", foto.path));
+
+    await this.prisma.fotosAnuncios.delete({
+      where: {
+        id: idFoto,
+      },
+    });
+  }
+
+  async updateAnuncio(id: number, data: AnuncioDto, authorId: number) {
+    const anuncio = await this.prisma.anuncio.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        mei: {
+          include: {
+            usuario: true,
+          },
+        },
+      },
+    });
+
+    if (!anuncio) throw new NotFoundError("Anúncio não encontrado");
+    if (anuncio.mei.usuario?.id !== authorId)
+      throw new UnauthorizedError("Usuário não autorizado");
+
+    await this.prisma.anuncio.update({
+      data: {
+        titulo: data.titulo,
+        descricao: data.descricao,
+        tipoAnuncio: data.tipoAnuncio,
+      },
+      where: {
+        id,
+      },
+    });
+  }
 }
 
 export default Anuncio;

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import classNames from "classnames";
+import { Link } from "react-router-dom";
 
 import TrashSvg from "../assets/svgs/iconmonstr-trash-can-27.svg";
-// import PencilSvg from "../assets/svgs/iconmonstr-pencil-7.svg";
+import PencilSvg from "../assets/svgs/iconmonstr-pencil-7.svg";
 
 export interface AdminBarComponentProps {
   className?: string;
   onDelete?: () => void;
-  onEdit?: () => void;
+  id: number;
 }
 
 function AdminBarComponent(props: AdminBarComponentProps) {
@@ -29,7 +30,7 @@ function AdminBarComponent(props: AdminBarComponentProps) {
 
   return (
     <div className={`bg-white flex p-4 rounded-md ${props.className}`}>
-      <button type="button" className="flex" onClick={handleDelete}>
+      <button type="button" className="flex mr-4" onClick={handleDelete}>
         <img
           src={TrashSvg}
           style={confirmDelete ? confirmIcon : undefined}
@@ -46,10 +47,10 @@ function AdminBarComponent(props: AdminBarComponentProps) {
             : "Deletar Anuncio"}
         </span>
       </button>
-      {/* <button type="button" className="flex" onClick={props.onEdit}>
+      <Link className="flex" to={`/anuncios/${props.id}/editar`}>
         <img src={PencilSvg} alt="Editar anuncio" className="mr-2" />
         <span>Editar Anuncio</span>
-      </button> */}
+      </Link>
     </div>
   );
 }

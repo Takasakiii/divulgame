@@ -8,6 +8,7 @@ import {
   InvalidArgsError,
   InvalidFileTypeError,
   NotFoundError,
+  UnauthorizedError,
 } from "../../database";
 import multer from "multer";
 import FotosAnuncios, { FotosSavedInfo } from "../../database/fotosAnuncios";
@@ -69,8 +70,12 @@ const anuncioRouter: Controller = (db) => {
           mimeType: foto.mimetype,
         }));
         const database = new FotosAnuncios(db);
-        await database.create(loggedUserId, idAnuncio, fotos);
-        res.status(201).json({ message: "Fotos enviadas com sucesso" });
+        const fotosGravadas = await database.create(
+          loggedUserId,
+          idAnuncio,
+          fotos
+        );
+        res.status(201).json(fotosGravadas);
       } catch (err) {
         if (err instanceof InvalidArgsError) {
           res.status(400).json({ error: err.message } as ErrorReponse);
@@ -180,6 +185,68 @@ const anuncioRouter: Controller = (db) => {
       await anuncio.remove(idAnuncio, loggedUserId);
       return res.status(200).json({ message: "Anuncio removido com sucesso" });
     } catch (err) {
+      if (err instanceof InvalidArgsError) {
+        return res.status(400).json({ error: err.message } as ErrorReponse);
+      }
+
+      console.error(err);
+      return res
+        .status(500)
+        .json({ error: "Internal server error" } as ErrorReponse);
+    }
+  });
+
+  router.delete(
+    "/:anuncio/fotos/:id",
+    autorizationMiddleware,
+    async (req, res) => {
+      try {
+        const idFoto = parseInt(req.params.id);
+
+        const { id: LoggedUserId } = res.locals.user as JwtPayload;
+        const anuncio = new Anuncio(db);
+        await anuncio.removeFoto(idFoto, LoggedUserId);
+        return res.status(200).json({ message: "Foto removida com sucesso" });
+      } catch (err) {
+        if (err instanceof NotFoundError) {
+          return res.status(404).json({ error: err.message } as ErrorReponse);
+        }
+
+        if (err instanceof UnauthorizedError) {
+          return res.status(401).json({ error: err.message } as ErrorReponse);
+        }
+
+        if (err instanceof InvalidArgsError) {
+          return res.status(400).json({ error: err.message } as ErrorReponse);
+        }
+
+        console.error(err);
+        return res
+          .status(500)
+          .json({ error: "Internal server error" } as ErrorReponse);
+      }
+    }
+  );
+
+  router.put("/:anuncio", autorizationMiddleware, async (req, res) => {
+    try {
+      const idAnuncio = parseInt(req.params.anuncio);
+      const { id: LoggedUserId } = res.locals.user as JwtPayload;
+      const anuncio = new Anuncio(db);
+      const anuncioDto = new AnuncioDto(req.body);
+      await anuncio.updateAnuncio(idAnuncio, anuncioDto, LoggedUserId);
+      return res
+        .status(200)
+        .json({ message: "Anuncio atualizado com sucesso" });
+    } catch (err) {
+      if (err instanceof NotFoundError) {
+        return res.status(404).json({ error: err.message } as ErrorReponse);
+      }
+
+      if (err instanceof UnauthorizedError) {
+        return res.status(401).json({ error: err.message } as ErrorReponse);
+      }
+
       if (err instanceof InvalidArgsError) {
         return res.status(400).json({ error: err.message } as ErrorReponse);
       }

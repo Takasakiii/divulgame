@@ -6,6 +6,7 @@ import CadastroMeiPage from "./pages/CadastroMei";
 import CadastroServicosPage from "./pages/CadastroServicos";
 import ViewAnuncioPage from "./pages/view-anuncio/ViewAnuncio";
 import MeusAnunciosPage from "./pages/meus-anuncios/MeusAnuncios";
+import AtualizarAnuncioPage from "./pages/AtualizarAnuncio";
 
 export interface RouterProps {
   children?: React.ReactNode;
@@ -22,6 +23,7 @@ function Router(props: RouterProps) {
         <Route path="/anuncios/adicionar" element={<CadastroServicosPage />} />
         <Route path="/anuncios/@me" element={<MeusAnunciosPage />} />
         <Route path="/anuncios/:id" element={<ViewAnuncioPage />} />
+        <Route path="/anuncios/:id/editar" element={<AtualizarAnuncioPage />} />
       </Routes>
     </HashRouter>
   );

@@ -8,6 +8,10 @@ export interface FotosSavedInfo {
   mimeType: string;
 }
 
+export interface FotosAnunciosResponse {
+  id: number;
+}
+
 class FotosAnuncios {
   private prisma: PrismaClient;
 
@@ -19,7 +23,7 @@ class FotosAnuncios {
     idLoggedUser: number,
     idAnuncio: number,
     fotos: FotosSavedInfo[]
-  ) {
+  ): Promise<FotosAnunciosResponse[]> {
     const anuncio = await this.prisma.anuncio.findFirst({
       where: { id: idAnuncio },
       include: {
@@ -48,7 +52,9 @@ class FotosAnuncios {
       })
     );
 
-    await Promise.all(promises);
+    const prismaResponse = await Promise.all(promises);
+
+    return prismaResponse.map((foto) => ({ id: foto.id }));
   }
 
   async getFoto(id: number): Promise<{ foto: Buffer; mimeType: string }> {
